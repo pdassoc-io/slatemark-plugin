@@ -1,0 +1,17 @@
+{
+  "name": "slatemark-plugin",
+  "owner": {
+    "name": "Slatemark",
+    "url": "https://slatemark.ai"
+  },
+  "plugins": [
+    {
+      "name": "slatemark",
+      "source": "./plugin",
+      "description": "Read-only market research + trade journal for Claude Code. One install wires the Slatemark remote MCP connector (OAuth sign-in) and the senior-analyst skill.",
+      "version": "0.1.0",
+      "homepage": "https://slatemark.ai",
+      "keywords": ["trading", "research", "market-data", "journal", "finance"]
+    }
+  ]
+}

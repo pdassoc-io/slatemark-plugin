@@ -1,0 +1,19 @@
+{
+  "name": "slatemark",
+  "displayName": "Slatemark",
+  "version": "0.1.0",
+  "description": "Read-only market research and a trade journal for Claude Code: bundles the Slatemark remote MCP connector (data tools + journal, OAuth sign-in) and the senior-analyst skill in one install.",
+  "author": {
+    "name": "Slatemark",
+    "url": "https://slatemark.ai"
+  },
+  "homepage": "https://slatemark.ai",
+  "repository": "https://github.com/pdassoc-io/slatemark-plugin",
+  "keywords": ["trading", "research", "market-data", "journal", "finance"],
+  "mcpServers": {
+    "slatemark": {
+      "type": "http",
+      "url": "https://slatemark.ai/mcp"
+    }
+  }
+}
