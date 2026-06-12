@@ -1,14 +1,17 @@
-# Slatemark — Claude Code plugin
+# Slatemark — Claude plugin
 
-One install wires Claude Code to Slatemark: the remote MCP connector
+One install wires Claude to Slatemark: the remote MCP connector
 (read-only market data, macro, filings, and your trade journal) plus the
-senior-analyst skill and the named analyst "moves" as slash commands.
+senior-analyst skill — and, in Claude Code, the named analyst "moves" as
+slash commands.
 
-Unlike Claude Desktop / claude.ai (where the connector and skill are two
-separate adds from `claude.ai/directory`), Claude Code supports true
-one-install plugins — this is the power-user SKU.
+The plugin installs on claude.ai, in Claude Desktop, and in Claude
+Code; the connector and skill are also available as two separate adds
+from `claude.ai/directory` if you prefer the pieces individually.
 
 ## Install
+
+**Claude Code:**
 
 ```text
 /plugin marketplace add pdassoc-io/slatemark-plugin
@@ -16,9 +19,16 @@ one-install plugins — this is the power-user SKU.
 ```
 
 The first command registers the marketplace; the second installs the
-plugin. On first tool use Claude Code opens an OAuth sign-in in your
-browser to connect your Slatemark account — there is no token to paste.
-Run `/mcp` if you want to trigger or check the sign-in.
+plugin.
+
+**Claude Desktop / claude.ai:** open **Customize → Plugins**, choose
+**Add from a repository**, paste
+`https://github.com/pdassoc-io/slatemark-plugin`, then install
+**Slatemark**.
+
+Claude opens an OAuth sign-in in your browser to connect your Slatemark
+account — at install or on first tool use. There is no token to paste.
+In Claude Code, run `/mcp` if you want to trigger or check the sign-in.
 
 ## What's in the box
 
@@ -28,7 +38,7 @@ Run `/mcp` if you want to trigger or check the sign-in.
 - **`senior-analyst` skill** — the senior-trading-analyst methodology;
   it branches its journaling behavior on whether your broker is linked
   (it calls `get_session_status` at session start).
-- **Slash commands** for the named moves:
+- **Slash commands** for the named moves (Claude Code):
   - `/slatemark:pre-trade-brief [ticker] [horizon]`
   - `/slatemark:post-mortem [ticker]`
   - `/slatemark:regime-check`

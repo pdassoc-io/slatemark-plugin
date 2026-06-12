@@ -1,21 +1,28 @@
-# Slatemark — Claude Code plugin marketplace
+# Slatemark — Claude plugin marketplace
 
-This repository is a [Claude Code](https://code.claude.com) plugin
-marketplace. Adding it gives Claude Code one-install access to Slatemark:
-the remote MCP connector (read-only market data, macro, filings, and
-your own trade journal), the senior-analyst skill, and the named
-analyst "moves" as slash commands.
+This repository is a Claude plugin marketplace. Adding it gives Claude
+one-install access to Slatemark: the remote MCP connector (read-only
+market data, macro, filings, and your own trade journal) and the
+senior-analyst skill — plus the named analyst "moves" as slash commands
+in [Claude Code](https://code.claude.com).
 
 ## Install
+
+**Claude Code:**
 
 ```text
 /plugin marketplace add pdassoc-io/slatemark-plugin
 /plugin install slatemark@slatemark-plugin
 ```
 
-On first tool use Claude Code opens an OAuth sign-in in your browser to
-connect your Slatemark account. There is no token to paste. Run `/mcp`
-if you want to trigger or check the sign-in.
+**Claude Desktop / claude.ai:** open **Customize → Plugins**, choose
+**Add from a repository**, paste
+`https://github.com/pdassoc-io/slatemark-plugin`, then install
+**Slatemark**.
+
+Claude opens an OAuth sign-in in your browser to connect your Slatemark
+account — at install or on first tool use. There is no token to paste.
+In Claude Code, run `/mcp` if you want to trigger or check the sign-in.
 
 A Slatemark account is required (free or Pro). Sign up at
 <https://slatemark.ai>.
@@ -25,7 +32,7 @@ A Slatemark account is required (free or Pro). Sign up at
 - **Remote MCP connector** — `https://slatemark.ai/mcp`, OAuth. The full
   read-only tool surface plus your per-user trade journal.
 - **`senior-analyst` skill** — the senior-trading-analyst methodology.
-- **Slash commands** — `/slatemark:pre-trade-brief`,
+- **Slash commands** (Claude Code) — `/slatemark:pre-trade-brief`,
   `/slatemark:post-mortem`, `/slatemark:regime-check`,
   `/slatemark:position-review`, `/slatemark:catalyst-map`,
   `/slatemark:earnings-setup`.
