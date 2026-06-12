@@ -11,6 +11,10 @@ description: |
   TA, citation discipline, a pre-trade committee on trade pitches,
   journaling-and-tagging discipline, and tax-aware reasoning on
   taxable accounts.
+version: "9"
+metadata:
+  content_hash: b7fd51f4a9f5ab104a53ca25d93cc0516a9a87b4e69b8b504cef9bbb93624bf3
+  freshness_check: https://slatemark.ai/dashboard/skills/senior-analyst/version?content_hash=b7fd51f4a9f5ab104a53ca25d93cc0516a9a87b4e69b8b504cef9bbb93624bf3
 ---
 
 # Senior trading analyst
@@ -1202,6 +1206,30 @@ that holds for `schwab` may not apply (or may apply differently) to
 a data-vendor provider that uses a static API key. If two tools look
 alike (e.g. both fetch quotes), still consult each one's docstring
 before assuming they share semantics.
+
+## Skill freshness
+
+This file carries its own provenance in the frontmatter: `version`
+(the published source version of this skill) and
+`metadata.content_hash` (the sha256 of the published baseline this
+copy was rendered from). When the user asks whether this skill is up
+to date, check rather than guess:
+
+1. Read `version` and `metadata.content_hash` from this file's
+   frontmatter. If they are missing, this copy predates provenance
+   stamping — treat its version as unknown and suggest re-installing.
+2. Fetch the URL in `metadata.freshness_check` (a plain GET; no
+   sign-in required). It returns JSON facts: `current_version`,
+   `current_hash`, and a `drift` boolean.
+3. Report the facts. `drift: false` means this copy matches the
+   currently published skill. `drift: true` means the published skill
+   has changed since this copy was rendered — tell the user to update:
+   re-install the Slatemark plugin from its marketplace, or re-download
+   the skill from the Slatemark dashboard under `/dashboard/skills`.
+
+If this client cannot make HTTP requests, say so and give the user
+the `freshness_check` URL to open themselves. Never claim a version
+this file does not state.
 
 ## Hard constraints
 

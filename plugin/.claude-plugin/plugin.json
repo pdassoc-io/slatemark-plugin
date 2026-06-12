@@ -1,7 +1,7 @@
 {
   "name": "slatemark",
   "displayName": "Slatemark",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Read-only market research and a trade journal for Claude: bundles the Slatemark remote MCP connector (data tools + journal, OAuth sign-in) and the senior-analyst skill in one install.",
   "author": {
     "name": "Slatemark",
