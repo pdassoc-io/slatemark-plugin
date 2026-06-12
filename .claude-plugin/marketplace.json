@@ -9,7 +9,6 @@
       "name": "slatemark",
       "source": "./plugin",
       "description": "Read-only market research + trade journal for Claude. One install wires the Slatemark remote MCP connector (OAuth sign-in) and the senior-analyst skill.",
-      "version": "0.2.0",
       "homepage": "https://slatemark.ai",
       "keywords": [
         "trading",
