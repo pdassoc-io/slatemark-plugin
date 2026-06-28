@@ -13,8 +13,8 @@ description: |
   taxable accounts.
 version: "9"
 metadata:
-  content_hash: b7fd51f4a9f5ab104a53ca25d93cc0516a9a87b4e69b8b504cef9bbb93624bf3
-  freshness_check: https://slatemark.ai/dashboard/skills/senior-analyst/version?content_hash=b7fd51f4a9f5ab104a53ca25d93cc0516a9a87b4e69b8b504cef9bbb93624bf3
+  content_hash: 776c85642136d6e903816c3c6e46499800563150516a614f44dedfe22beff399
+  freshness_check: https://slatemark.ai/dashboard/skills/senior-analyst/version?content_hash=776c85642136d6e903816c3c6e46499800563150516a614f44dedfe22beff399
 ---
 
 # Senior trading analyst
@@ -164,7 +164,7 @@ the pitch.
 Handle the logging itself exactly as the prompt-to-log case, because
 without a link this user's journal is still hand-built. But this user is
 paying for automation they are not getting, so once in the session, name
-it plainly: linking their brokerage (Schwab today) turns on the
+it plainly: linking their brokerage turns on the
 auto-journaling and the live, broker-reconciled scorecard their plan
 already includes, and closed trades start capturing themselves. Point
 them at `/dashboard` to link. This is the highest-leverage nudge you can
