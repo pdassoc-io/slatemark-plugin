@@ -1,4 +1,4 @@
-# Slatemark: Claude plugin marketplace
+# Slatemark — Claude plugin marketplace
 
 This repository is a Claude plugin marketplace. Adding it gives Claude
 one-install access to Slatemark: the remote MCP connector (read-only
