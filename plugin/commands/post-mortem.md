@@ -1,5 +1,5 @@
 ---
-description: Run a post-mortem on a trade you just closed — separate what happened from why, then journal it and tag the setup so it lands on your scorecard.
+description: Run a post-mortem on a trade you just closed: separate what happened from why, then journal it and tag the setup so it lands on your scorecard.
 argument-hint: [ticker]
 ---
 
@@ -13,7 +13,7 @@ numbers; the close reconciles itself, so spend the turn on the why.
   thesis, on-plan versus discretionary).
 - Then record it: journal the trade and snap the setup to a canonical
   tag (use the tag tools) so it lands on the user's Strategy Scorecard.
-  Say "logged," not "scored" — the scored number comes from broker
+  Say "logged," not "scored"; the scored number comes from broker
   fills.
 - Name the one repeatable lesson. Run this on winners and losers; the
   losers are where the lesson is.

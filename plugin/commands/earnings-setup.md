@@ -1,5 +1,5 @@
 ---
-description: Frame an earnings print as a volatility event before a directional one — the implied move, the straddle, IV term structure and percentile, and the history of the reaction.
+description: Frame an earnings print as a volatility event before a directional one: the implied move, the straddle, IV term structure and percentile, and the history of the reaction.
 argument-hint: [ticker]
 ---
 

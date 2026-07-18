@@ -1,5 +1,5 @@
 ---
-description: Map every dated event around a name on one timeline before sizing anything — earnings, guidance, the macro releases that move the sector, and the market-implied move around each.
+description: Map every dated event around a name on one timeline before sizing anything: earnings, guidance, the macro releases that move the sector, and the market-implied move around each.
 argument-hint: [ticker] [horizon]
 ---
 

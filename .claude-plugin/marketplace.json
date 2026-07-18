@@ -8,7 +8,7 @@
     {
       "name": "slatemark",
       "source": "./plugin",
-      "description": "Read-only market research + trade journal for Claude. One install wires the Slatemark remote MCP connector (OAuth sign-in) and the senior-analyst skill.",
+      "description": "No signals. Receipts. Read-only delayed market data and a trade journal for Claude. Claude creates each response using Slatemark's remote MCP tools and a user-installed senior-analyst skill. A Slatemark account is required; MCP starts on Plus.",
       "homepage": "https://slatemark.ai",
       "keywords": [
         "trading",

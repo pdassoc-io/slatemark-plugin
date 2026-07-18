@@ -1,5 +1,5 @@
 ---
-description: Run a cross-asset regime check before any single-name view — the curve, the dollar, credit, financial conditions, and vol, plus where the dislocations are.
+description: Run a cross-asset regime check before any single-name view: the curve, the dollar, credit, financial conditions, and vol, plus where the dislocations are.
 argument-hint: (no arguments)
 ---
 

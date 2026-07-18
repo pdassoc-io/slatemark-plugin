@@ -1,5 +1,5 @@
 ---
-description: Re-underwrite a position you already hold as if deciding to enter today — does the thesis still hold at the current level, and where does it sit against your framework rules?
+description: Re-underwrite a position you already hold as if deciding to enter today: does the thesis still hold at the current level, and where does it sit against your framework rules?
 argument-hint: [ticker]
 ---
 
@@ -13,7 +13,7 @@ comfortable re-read of why it was bought:
 
 - Does the original thesis still hold at the level it trades now, around
   its key support and resistance?
-- Where does the position sit against the relevant framework rules —
+- Where does the position sit against the relevant framework rules:
   concentration, the position lifecycle, and any hedge or sizing
   discipline that applies (use list_rules / get_rule)?
 

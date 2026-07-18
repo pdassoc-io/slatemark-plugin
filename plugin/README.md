@@ -1,9 +1,12 @@
-# Slatemark — Claude plugin
+# Slatemark Claude plugin
+
+**No signals. Receipts.**
 
 One install wires Claude to Slatemark: the remote MCP connector
-(read-only market data, macro, filings, and your trade journal) plus the
-senior-analyst skill — and, in Claude Code, the named analyst "moves" as
-slash commands.
+(read-only delayed market data, macro, filings, and your trade journal)
+plus a user-installed senior-analyst skill, and in Claude Code, workflow
+slash commands. Claude creates the response using those tools and the
+installed skill. Slatemark does not host a model or generate the reply.
 
 The plugin installs on claude.ai, in Claude Desktop, and in Claude
 Code; the connector and skill are also available as two separate adds
@@ -27,18 +30,27 @@ plugin.
 **Slatemark**.
 
 Claude opens an OAuth sign-in in your browser to connect your Slatemark
-account — at install or on first tool use. There is no token to paste.
+account at install or on first tool use. There is no token to paste.
 In Claude Code, run `/mcp` if you want to trigger or check the sign-in.
+
+A Slatemark account is required. MCP access starts on the Plus plan.
+
+## Try this first
+
+After install, start with one workflow instead of a blank chat:
+<https://slatemark.ai/first-workflow>. The page gives copyable prompts
+for a pre-trade brief, position review, earnings setup, regime check,
+catalyst map, post-mortem, and journal entry.
 
 ## What's in the box
 
-- **Remote MCP connector** (`https://slatemark.ai/mcp`, OAuth) — the same
-  hosted server as every other client, with the full read-only tool
-  surface and your per-user trade journal.
-- **`senior-analyst` skill** — the senior-trading-analyst methodology;
-  it branches its journaling behavior on whether your broker is linked
-  (it calls `get_session_status` at session start).
-- **Slash commands** for the named moves (Claude Code):
+- **Remote MCP connector** (`https://slatemark.ai/mcp`, OAuth): the same
+  hosted server as every other client, with the read-only tool surface
+  available on your plan and your per-user trade journal.
+- **`senior-analyst` skill**: a user-installed methodology Claude can
+  use with the tools. At session start it calls `get_session_status` to
+  choose connected-account or manual journal context.
+- **Workflow slash commands** (Claude Code):
   - `/slatemark:pre-trade-brief [ticker] [horizon]`
   - `/slatemark:post-mortem [ticker]`
   - `/slatemark:regime-check`
@@ -51,10 +63,14 @@ In Claude Code, run `/mcp` if you want to trigger or check the sign-in.
 - Read-only. Slatemark never places, modifies, or cancels an order; every
   trading decision is yours. Nothing here is personalized investment
   advice.
+- Market data is approximately 15 minutes delayed and labeled with its
+  freshness. Brokerage connections provide Account Data, not market data.
+  Option-chain snapshots are delayed, available only where listed,
+  contain no Greeks, and use indicative, non-executable marks.
 - The bundled `skills/senior-analyst/SKILL.md` is **generated** from the
   canonical templated source in the private `pdassoc-io/slatemark` repo
   (`skills/senior-analyst/`) via `scripts/build_plugin_skill.py`
-  (rendered with defaults). Don't edit it by hand — edit the source and
+  (rendered with defaults). Don't edit it by hand; edit the source and
   re-run the script. A test (`tests/test_plugin_skill_in_sync.py`) fails
   if the two drift. This whole `marketplace/` tree is published to the
   public `pdassoc-io/slatemark-plugin` repo by

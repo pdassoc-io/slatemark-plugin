@@ -1,5 +1,5 @@
 ---
-description: Run a pre-trade brief on a ticker before committing risk — trend and levels, the next catalyst, options skew and IV, the macro backdrop, and where the thesis breaks.
+description: Run a pre-trade brief on a ticker before committing risk: trend and levels, the next catalyst, options skew and IV, the macro backdrop, and where the thesis breaks.
 argument-hint: [ticker] [horizon]
 ---
 
