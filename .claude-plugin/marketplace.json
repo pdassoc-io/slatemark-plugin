@@ -8,7 +8,7 @@
     {
       "name": "slatemark",
       "source": "./plugin",
-      "description": "No signals. Receipts. Read-only delayed market data and a trade journal for Claude. Claude creates each response using Slatemark's remote MCP tools and a user-installed senior-analyst skill. A Slatemark account is required; MCP starts on Plus.",
+      "description": "No signals. Receipts. Read-only delayed market data and a trade journal for Claude. Claude creates each response using Slatemark's remote MCP tools and a user-installed senior-analyst skill. A Slatemark account is required; Free includes one constrained MCP connection.",
       "homepage": "https://slatemark.ai",
       "keywords": [
         "trading",

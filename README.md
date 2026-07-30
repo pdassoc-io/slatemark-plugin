@@ -28,8 +28,10 @@ Claude opens an OAuth sign-in in your browser to connect your Slatemark
 account at install or on first tool use. There is no token to paste.
 In Claude Code, run `/mcp` if you want to trigger or check the sign-in.
 
-A Slatemark account is required. MCP access starts on the Plus plan.
-Sign up at <https://slatemark.ai>.
+A Slatemark account is required. Free includes one constrained
+AI-client connection. Plus adds current brokerage Account Data,
+available fill backfill, periodic reconciliation, FINRA, and additional
+active AI-client connections. Sign up at <https://slatemark.ai>.
 
 ## Try this first
 
