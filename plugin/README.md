@@ -2,15 +2,20 @@
 
 **No signals. Receipts.**
 
-One install wires Claude to Slatemark: the remote MCP connector
+This optional bundle wires Claude to Slatemark: the remote MCP connector
 (read-only delayed market data, macro, filings, and your trade journal)
 plus a user-installed senior-analyst skill, and in Claude Code, workflow
 slash commands. Claude creates the response using those tools and the
 installed skill. Slatemark does not host a model or generate the reply.
 
-The plugin installs on claude.ai, in Claude Desktop, and in Claude
-Code; the connector and skill are also available as two separate adds
-from `claude.ai/directory` if you prefer the pieces individually.
+For the shortest connector-only setup, open the accepted
+[Slatemark connector listing](https://claude.ai/directory/connectors/slatemark),
+choose **Connect**, and approve the sign-in. The connector does not
+require this plugin or the skill. Neither this plugin nor the
+standalone skill is claimed as a Claude directory listing.
+
+The optional plugin installs on claude.ai, in Claude Desktop, and in
+Claude Code.
 
 ## Install
 
@@ -78,3 +83,10 @@ catalyst map, post-mortem, and journal entry.
   if the two drift. This whole `marketplace/` tree is published to the
   public `pdassoc-io/slatemark-plugin` repo by
   `scripts/publish_plugin_marketplace.sh`.
+
+## Compatible AI clients
+
+This plugin is specific to Claude. Any compatible AI client can connect
+to the same hosted server at `https://slatemark.ai/mcp` using its own
+setup flow. ChatGPT will use a separate connector-only app after its
+OpenAI Apps SDK submission; Claude's listing does not publish that app.

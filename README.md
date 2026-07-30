@@ -2,13 +2,19 @@
 
 **No signals. Receipts.**
 
-This repository is a Claude plugin marketplace. Adding it gives Claude
-one-install access to Slatemark: the remote MCP connector (read-only
-delayed market data, macro, filings, and your own trade journal) and a
-user-installed senior-analyst skill, plus workflow slash commands in
+This repository is an optional Claude plugin marketplace. The plugin
+bundles Slatemark's remote MCP connector (read-only delayed market
+data, macro, filings, and your own trade journal), the
+senior-analyst skill, and workflow slash commands for
 [Claude Code](https://code.claude.com). Claude creates the response
 using those tools and the installed skill. Slatemark does not host a
 model or generate the reply.
+
+For the shortest connector-only setup, open the accepted
+[Slatemark connector listing](https://claude.ai/directory/connectors/slatemark),
+choose **Connect**, and approve the sign-in. The connector does not
+require this plugin or the skill. Neither this plugin nor the
+standalone skill is claimed as a Claude directory listing.
 
 ## Install
 
@@ -54,6 +60,14 @@ catalyst map, post-mortem, and journal entry.
   `/slatemark:earnings-setup`.
 
 See [`plugin/README.md`](plugin/README.md) for the plugin's own readme.
+
+## Compatible AI clients
+
+This marketplace is specific to Claude. Any compatible AI client can
+connect to the same hosted server at `https://slatemark.ai/mcp` using
+its own setup flow. ChatGPT will use a separate connector-only app
+after its OpenAI Apps SDK submission; Claude's listing does not publish
+that app.
 
 ## What this is and isn't
 
