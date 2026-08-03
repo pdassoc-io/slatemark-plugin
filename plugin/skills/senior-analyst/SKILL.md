@@ -11,10 +11,10 @@ description: |
   TA, citation discipline, a pre-trade committee on trade pitches,
   journaling-and-tagging discipline, and tax-aware reasoning on
   taxable accounts.
-version: "16"
+version: "17"
 metadata:
-  content_hash: bdafff4f7c674b8877e1a9456118e9983697235c6dd701e35b22773acc0bac2d
-  freshness_check: https://slatemark.ai/dashboard/skills/senior-analyst/version?content_hash=bdafff4f7c674b8877e1a9456118e9983697235c6dd701e35b22773acc0bac2d
+  content_hash: 60039f00d0ef05fac56d6c7b47e9c744953821e11dea4a377ad8bfe516bd82ac
+  freshness_check: https://slatemark.ai/dashboard/skills/senior-analyst/version?content_hash=60039f00d0ef05fac56d6c7b47e9c744953821e11dea4a377ad8bfe516bd82ac
 ---
 
 # Senior trading analyst
@@ -141,6 +141,16 @@ don't get buried.
   close) → `get_position_context(symbol)` and the open journal
   entries before recommending. See *Cross-reference the trade
   journal before acting on the book*.
+- **Book-wide session-performance question** (*"how's the book doing
+  today,"* *"what's my day,"* or a general book read that includes
+  today's change*) → start with `get_snaptrade_book_snapshot` so every
+  equity and option position is in the inventory. Refresh equity rows
+  through `get_quotes`; refresh each distinct held option contract with
+  a narrowly scoped `get_option_chain` call. Report the included and
+  excluded legs, and never present a complete book-level day number
+  when an option contract could not be matched or assigned a reliable
+  session change. See *Pricing an option contract the user already
+  holds*.
 - **Framing-dependent question** (allocation, sizing relative to net
   worth, dry-powder level, *"is this too aggressive / conservative
   for my age?"*) → call `get_account_profile` before answering. See
@@ -948,7 +958,7 @@ before guessing at missing framing:
 
 | Question shape | Dimensions to analyze |
 |---|---|
-| *"How is my portfolio doing?"* | holdings and current values; per-position returns and volatility; concentration and correlation structure; drawdown and benchmark comparison; factor exposure of the book; upcoming catalysts across holdings; **trade-pattern audit via `analyze_journal_patterns`**: win-rate and R-multiple skew across position class, lifecycle, day-of-week of entry, catalyst presence, and stop presence (populates as trades close with structured exit data) |
+| *"How is my portfolio doing?"* | holdings and current values, including the option rows already valued in `get_snaptrade_book_snapshot`; for session/day performance, equity changes from `get_quotes` and each held option contract priced separately through `get_option_chain`, with coverage and both feeds' as-of times stated; for a longer window, disclose that the current tool surface has no historical option-price series rather than silently dropping those legs; per-position returns and volatility; concentration and correlation structure; drawdown and benchmark comparison; factor exposure of the book; upcoming catalysts across holdings; **trade-pattern audit via `analyze_journal_patterns`**: win-rate and R-multiple skew across position class, lifecycle, day-of-week of entry, catalyst presence, and stop presence (populates as trades close with structured exit data) |
 | *"What's the macro setup right now?"* | upcoming high-impact data releases; next FOMC meeting and recent Fed commentary; yield curve level and shape; recent Treasury auction demand and TGA cash; equity / bond / FX / commodity regime |
 | *"Explain this move in X."* | price and volume around the move; filings in the window; headlines and sentiment in the window; sector and factor returns same window; macro releases that day; peer and correlated-asset moves |
 | *"Is X overvalued / undervalued?"* | fundamentals from filings (XBRL facts, recent reports); valuation ratios vs. history and vs. peers/industry; price trend and relative strength; factor / style exposure |
@@ -1203,6 +1213,59 @@ govern sizing and portfolio-level risk once the trade is defined; this
 section is the options-specific layer on top. If the user states a
 different framework (their own IV thresholds, their own allowed
 structures), use theirs and note the swap.
+
+### Pricing an option contract the user already holds
+
+This is different from analyzing a chain or evaluating a structure. A
+book read needs the value and session change of the exact contract the
+user holds. Start with `get_snaptrade_book_snapshot`: its option rows
+are already included in current market value at the brokerage's last
+synced mark. Use the contract label there, or the raw `option_symbol`
+from the matching account's `get_snaptrade_positions` response when
+the label is incomplete, to identify the underlying, call/put, strike,
+expiration, signed contract count, and average purchase price.
+
+For a session/day read, fetch each distinct standard contract with
+`get_option_chain(symbol, strike=X, from_date=expiration,
+to_date=expiration, include_underlying_quote=false)`, setting
+`contract_type` to `"CALL"` or `"PUT"` as appropriate. Confirm the
+returned `putCall`, `strikePrice`, and `expirationDate` before using
+the row. Inspect the returned contract symbol too, but do not require
+its string to equal the brokerage symbol: SnapTrade and Yahoo use
+different option-symbol formats. Do not use `analyze_option_chain` for
+this job: it summarizes ATM, skew, open interest, and volume across an
+expiration and does not preserve the one held-contract row.
+
+Keep the price fields on their actual bases:
+
+- `mark` is the bid/ask midpoint and is only an indicative current
+  value. It is not a day-P&L field or an executable price.
+- `netChange` and `percentChange` are changes in the last trade from
+  the prior close. The Yahoo chain does not carry mark-to-mark change:
+  `markChange` and `markPercentChange` are `null`. Never infer a prior
+  midpoint by subtracting `netChange` from `mark`.
+- When `netChange` is present and the contract passes the liquidity
+  and freshness checks, an indicative last-trade-based day P&L is
+  `netChange × signed contracts × multiplier`. Label that basis.
+  If the spread is wide, the last trade is stale, or volume is absent,
+  quote the bid/ask and last-trade change separately and exclude the
+  leg from any precise aggregate rather than laundering it into a
+  clean-looking total.
+
+Run `get_rule("options-liquidity-gates")` before quoting the contract
+or its contribution. Account for every option leg explicitly, for
+example *"option coverage: 3 of 4 contracts; one excluded because no
+exact chain row matched."* The chain response's `as_of` is derived
+from the returned contracts' last-trade timestamps, while `fetched_at`
+is when the tool ran; equity quotes have their own `as_of`. State the
+separate times and do not blend them into one *"as of now."*
+
+The current chain supplies one-session change only. For a weekly or
+other multi-session book-performance question, the tool surface has no
+historical option-price series. Say that option performance for the
+window is unavailable unless the user supplies an appropriate prior
+contract value; do not substitute today's `netChange` or silently omit
+the legs.
 
 ### Verify the chain before citing anything
 

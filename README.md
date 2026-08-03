@@ -65,9 +65,9 @@ See [`plugin/README.md`](plugin/README.md) for the plugin's own readme.
 
 This marketplace is specific to Claude. Any compatible AI client can
 connect to the same hosted server at `https://slatemark.ai/mcp` using
-its own setup flow. ChatGPT will use a separate connector-only app
-after its OpenAI Apps SDK submission; Claude's listing does not publish
-that app.
+its own setup flow. A separate native OpenAI plugin package is being
+tested locally in Codex, but it has no ChatGPT app mapping and has not
+been submitted or published. Claude's listing does not publish that plugin.
 
 ## What this is and isn't
 

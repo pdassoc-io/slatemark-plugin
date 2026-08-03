@@ -18,9 +18,9 @@ the whole backdrop in a single pass:
 - a rolling cross-asset correlation matrix over the major assets, with
   the stock-bond correlation called out.
 
-It runs on bare Yahoo, so it works with no broker link. Reach for the
-individual tools only to drill into a reading that stands out or to add
-context the composite does not carry: real yields and a
+It runs on delayed public market data, so it works with no broker link.
+Reach for the individual tools only to drill into a reading that stands
+out or to add context the composite does not carry: real yields and a
 financial-conditions read (FRED series), recent Treasury auction demand
 and TGA cash, or a longer correlation history.
 

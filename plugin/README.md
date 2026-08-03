@@ -88,5 +88,6 @@ catalyst map, post-mortem, and journal entry.
 
 This plugin is specific to Claude. Any compatible AI client can connect
 to the same hosted server at `https://slatemark.ai/mcp` using its own
-setup flow. ChatGPT will use a separate connector-only app after its
-OpenAI Apps SDK submission; Claude's listing does not publish that app.
+setup flow. A separate native OpenAI plugin package is being tested locally
+in Codex, but it has no ChatGPT app mapping and has not been submitted or
+published. Claude's listing does not publish that plugin.
