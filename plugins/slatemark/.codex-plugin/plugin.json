@@ -1,0 +1,46 @@
+{
+  "name": "slatemark",
+  "version": "0.1.0",
+  "description": "No signals. Receipts. Read-only delayed market data and a trade journal for Codex. The AI creates each response using Slatemark's remote MCP tools and user-installed skills. A Slatemark account is required; Free includes one constrained MCP connection.",
+  "author": {
+    "name": "Slatemark",
+    "email": "support@slatemark.ai",
+    "url": "https://slatemark.ai"
+  },
+  "homepage": "https://slatemark.ai",
+  "keywords": [
+    "trading",
+    "research",
+    "market-data",
+    "journal",
+    "finance",
+    "mcp",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Slatemark",
+    "shortDescription": "Trade journal. Read-only MCP.",
+    "longDescription": "Use Slatemark for approximately 15-minute-delayed market data, macro data, filings, framework rules, and your trade journal. Your AI client creates each response from Slatemark's remote MCP tools and skills you chose to install; Slatemark hosts no model. Brokerage, order, trading, and funds access is read-only. Journal writes are limited to user-authored records in your Slatemark store. Nothing here is personalized investment advice. A Slatemark account is required.",
+    "developerName": "Slatemark",
+    "category": "Finance",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://slatemark.ai",
+    "privacyPolicyURL": "https://slatemark.ai/privacy",
+    "termsOfServiceURL": "https://slatemark.ai/terms",
+    "defaultPrompt": [
+      "What is the latest delayed quote and recent trend for AAPL?",
+      "Which published AAPL filings and FOMC dates fall within the next 30 days?",
+      "Add a note to my journal that I opened a starter position in MSFT."
+    ],
+    "brandColor": "#3ee07f",
+    "composerIcon": "./assets/slatemark-mark.svg",
+    "logo": "./assets/slatemark-mark.svg",
+    "screenshots": []
+  }
+}

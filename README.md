@@ -1,22 +1,23 @@
-# Slatemark Claude plugin marketplace
+# Slatemark plugin marketplace
 
 **No signals. Receipts.**
 
-This repository is an optional Claude plugin marketplace. The plugin
-bundles Slatemark's remote MCP connector (read-only delayed market
-data, macro, filings, and your own trade journal), the
-senior-analyst skill, and workflow slash commands for
-[Claude Code](https://code.claude.com). Claude creates the response
-using those tools and the installed skill. Slatemark does not host a
-model or generate the reply.
+This public repository distributes Slatemark's optional client plugins for
+Claude and Codex. Both packages connect to the same OAuth-protected Slatemark
+MCP server and install user-chosen methodology alongside it. The AI client
+creates each response. Slatemark does not host a model or generate the reply.
+
+Git marketplace availability is not a Claude or OpenAI directory listing.
+Claude's connector-only listing is accepted separately; the native Codex
+package has not been submitted to or accepted by OpenAI for the universal
+Plugins Directory.
+
+## Install for Claude
 
 For the shortest connector-only setup, open the accepted
 [Slatemark connector listing](https://claude.ai/directory/connectors/slatemark),
-choose **Connect**, and approve the sign-in. The connector does not
-require this plugin or the skill. Neither this plugin nor the
-standalone skill is claimed as a Claude directory listing.
-
-## Install
+choose **Connect**, and approve the sign-in. The connector does not require
+this plugin or the skill.
 
 **Claude Code:**
 
@@ -27,68 +28,60 @@ standalone skill is claimed as a Claude directory listing.
 
 **Claude Desktop / claude.ai:** open **Customize → Plugins**, choose
 **Add from a repository**, paste
-`https://github.com/pdassoc-io/slatemark-plugin`, then install
-**Slatemark**.
+`https://github.com/pdassoc-io/slatemark-plugin`, then install **Slatemark**.
 
-Claude opens an OAuth sign-in in your browser to connect your Slatemark
-account at install or on first tool use. There is no token to paste.
-In Claude Code, run `/mcp` if you want to trigger or check the sign-in.
+The Claude package includes the connector, the `senior-analyst` skill, and six
+`/slatemark:*` workflow commands for Claude Code. See
+[`plugin/README.md`](plugin/README.md).
 
-A Slatemark account is required. Free includes one constrained
-AI-client connection. Plus adds current brokerage Account Data,
-available fill and backfill import, periodic reconciliation, FINRA,
-additional active AI-client connections, and higher fair-use limits.
-Sign up at <https://slatemark.ai>.
+## Install for Codex
 
-## Try this first
+```text
+codex plugin marketplace add pdassoc-io/slatemark-plugin
+codex plugin add slatemark@slatemark-codex-plugin
+```
 
-After install, start with one workflow instead of a blank chat:
-<https://slatemark.ai/first-workflow>. The page gives copyable prompts
-for a pre-trade brief, position review, earnings setup, regime check,
-catalyst map, post-mortem, and journal entry.
+Start a new Codex task after installation and authenticate when prompted. The
+native package includes the connector, the `senior-analyst` skill, and six
+focused workflow skills. See
+[`plugins/slatemark/README.md`](plugins/slatemark/README.md).
 
-## What's in the box
+Neither git install registers a ChatGPT app. ChatGPT availability requires a
+separate OpenAI Developer Platform submission and approval.
 
-- **Remote MCP connector**: `https://slatemark.ai/mcp`, OAuth. The
-  read-only tool surface available on your plan plus your per-user
-  trade journal.
-- **`senior-analyst` skill**: a user-installed methodology Claude can
-  use with the tools.
-- **Slash commands** (Claude Code): `/slatemark:pre-trade-brief`,
-  `/slatemark:post-mortem`, `/slatemark:regime-check`,
-  `/slatemark:position-review`, `/slatemark:catalyst-map`,
-  `/slatemark:earnings-setup`.
+## Connection and plans
 
-See [`plugin/README.md`](plugin/README.md) for the plugin's own readme.
+The packages connect to `https://slatemark.ai/mcp` with OAuth. There is no
+token to paste. A Slatemark account is required. Free includes one constrained
+AI-client connection. Plus adds current brokerage Account Data, available
+past fills imported into the trade journal, available new fills imported
+periodically, short interest history from FINRA, additional active AI-client
+connections, and a higher fair-use limit. Sign up at <https://slatemark.ai>.
 
-## Compatible AI clients
-
-This marketplace is specific to Claude. Any compatible AI client can
-connect to the same hosted server at `https://slatemark.ai/mcp` using
-its own setup flow. A separate native OpenAI plugin package is being
-tested locally in Codex, but it has no ChatGPT app mapping and has not
-been submitted or published. Claude's listing does not publish that plugin.
+After installation, start with one focused workflow instead of a blank chat:
+<https://slatemark.ai/first-workflow>.
 
 ## What this is and isn't
 
-Slatemark is read-only research and journaling. It never places,
-modifies, or cancels an order; every trading decision is yours. Nothing
-here is personalized investment advice, and Slatemark is not a
+Brokerage, order, trading, and funds access is read-only. Slatemark never
+places, modifies, or cancels an order; every trading decision is yours. The
+journal can write only user-authored records to your private Slatemark store.
+Nothing here is personalized investment advice, and Slatemark is not a
 registered investment adviser, broker-dealer, or fiduciary.
 
 Market data is approximately 15 minutes delayed and labeled with its
 freshness. Brokerage connections provide Account Data, not market data.
-Option-chain snapshots are delayed, available only where listed, contain
-no Greeks, and use indicative, non-executable marks.
+Option-chain snapshots are delayed, available only where listed, contain no
+Greeks, and use indicative, non-executable marks.
 
 ## License / use
 
-© Slatemark. This plugin is published for use with the hosted Slatemark
-service (the connector requires a Slatemark account). The bundled
-methodology skill and commands are provided for that use and are not
-released under an open-source redistribution license. The Slatemark
-server code is not distributed here.
+© Slatemark. These plugins are published for use with the hosted Slatemark
+service. The bundled methodology and workflow content is not released under
+an open-source redistribution license. The Slatemark server code is not
+distributed here.
 
 > Maintainers: this repository is **generated** from the private
-> `pdassoc-io/slatemark` source (`marketplace/`). Do not hand-edit it;
-> edit the source and run `scripts/publish_plugin_marketplace.sh`.
+> `pdassoc-io/slatemark` sources under `marketplace/` and
+> `codex-marketplace/`. Do not hand-edit it; edit the sources and run
+> `scripts/publish_plugin_marketplace.sh`.

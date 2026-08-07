@@ -1,0 +1,11 @@
+interface:
+  display_name: "Position Review"
+  short_description: "Re-underwrite a position you hold"
+  default_prompt: "Use $position-review to review my AAPL position."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "slatemark"
+      description: "Slatemark research and user-authored trade journal tools"
+      transport: "streamable_http"
+      url: "https://slatemark.ai/mcp"

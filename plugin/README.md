@@ -80,14 +80,15 @@ catalyst map, post-mortem, and journal entry.
   (`skills/senior-analyst/`) via `scripts/build_plugin_skill.py`
   (rendered with defaults). Don't edit it by hand; edit the source and
   re-run the script. A test (`tests/test_plugin_skill_in_sync.py`) fails
-  if the two drift. This whole `marketplace/` tree is published to the
-  public `pdassoc-io/slatemark-plugin` repo by
+  if the two drift. This Claude package is composed with the native Codex
+  package and published to the public `pdassoc-io/slatemark-plugin` repo by
   `scripts/publish_plugin_marketplace.sh`.
 
 ## Compatible AI clients
 
-This plugin is specific to Claude. Any compatible AI client can connect
-to the same hosted server at `https://slatemark.ai/mcp` using its own
-setup flow. A separate native OpenAI plugin package is being tested locally
-in Codex, but it has no ChatGPT app mapping and has not been submitted or
-published. Claude's listing does not publish that plugin.
+This package is specific to Claude. The same public git marketplace also
+contains a native Codex package under `plugins/slatemark/`; it has no ChatGPT
+app mapping and is not an accepted OpenAI directory listing. Any compatible
+AI client can connect to the hosted server at `https://slatemark.ai/mcp`
+using its own setup flow. Claude's connector acceptance does not confer an
+OpenAI listing.

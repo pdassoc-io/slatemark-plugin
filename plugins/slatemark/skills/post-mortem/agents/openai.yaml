@@ -1,0 +1,11 @@
+interface:
+  display_name: "Trade Post-mortem"
+  short_description: "Review and journal a closed trade"
+  default_prompt: "Use $post-mortem to review my latest closed trade."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "slatemark"
+      description: "Slatemark research and user-authored trade journal tools"
+      transport: "streamable_http"
+      url: "https://slatemark.ai/mcp"

@@ -1,0 +1,11 @@
+interface:
+  display_name: "Catalyst Map"
+  short_description: "Map dated events around a ticker"
+  default_prompt: "Use $catalyst-map to map NVDA catalysts for the next month."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "slatemark"
+      description: "Slatemark research and user-authored trade journal tools"
+      transport: "streamable_http"
+      url: "https://slatemark.ai/mcp"

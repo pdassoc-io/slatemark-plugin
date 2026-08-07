@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "slatemark": {
+      "type": "http",
+      "url": "https://slatemark.ai/mcp",
+      "oauth_resource": "https://slatemark.ai/mcp"
+    }
+  }
+}

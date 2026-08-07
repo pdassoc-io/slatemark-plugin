@@ -1,0 +1,20 @@
+{
+  "name": "slatemark-codex-plugin",
+  "interface": {
+    "displayName": "Slatemark plugin marketplace"
+  },
+  "plugins": [
+    {
+      "name": "slatemark",
+      "source": {
+        "source": "local",
+        "path": "./plugins/slatemark"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Finance"
+    }
+  ]
+}
