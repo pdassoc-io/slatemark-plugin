@@ -54,9 +54,10 @@ separate OpenAI Developer Platform submission and approval.
 The packages connect to `https://slatemark.ai/mcp` with OAuth. There is no
 token to paste. A Slatemark account is required. Free includes one constrained
 AI-client connection. Plus adds current brokerage Account Data, available
-past fills imported into the trade journal, available new fills imported
-periodically, short interest history from FINRA, additional active AI-client
-connections, and a higher fair-use limit. Sign up at <https://slatemark.ai>.
+past booked activity imported into the trade journal, newly available booked
+activity imported periodically, short interest history from FINRA, additional
+active AI-client connections, and a higher fair-use limit. Sign up at
+<https://slatemark.ai>.
 
 After installation, start with one focused workflow instead of a blank chat:
 <https://slatemark.ai/first-workflow>.

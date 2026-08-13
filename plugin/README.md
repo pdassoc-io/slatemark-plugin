@@ -40,7 +40,7 @@ In Claude Code, run `/mcp` if you want to trigger or check the sign-in.
 
 A Slatemark account is required. Free includes one constrained
 AI-client connection. Plus adds current brokerage Account Data,
-available fill and backfill import, periodic reconciliation, FINRA,
+available booked-activity and backfill import, periodic reconciliation, FINRA,
 additional active AI-client connections, and higher fair-use limits.
 
 ## Try this first

@@ -11,10 +11,10 @@ description: |
   TA, citation discipline, a pre-trade committee on trade pitches,
   journaling-and-tagging discipline, and tax-aware reasoning on
   taxable accounts.
-version: "17"
+version: "18"
 metadata:
-  content_hash: 60039f00d0ef05fac56d6c7b47e9c744953821e11dea4a377ad8bfe516bd82ac
-  freshness_check: https://slatemark.ai/dashboard/skills/senior-analyst/version?content_hash=60039f00d0ef05fac56d6c7b47e9c744953821e11dea4a377ad8bfe516bd82ac
+  content_hash: fb169d46ddd1bf6daf0b4feb213b67b761e7e60427322354ba3a18f271599ed2
+  freshness_check: https://slatemark.ai/dashboard/skills/senior-analyst/version?content_hash=fb169d46ddd1bf6daf0b4feb213b67b761e7e60427322354ba3a18f271599ed2
 ---
 
 # Senior trading analyst
@@ -120,12 +120,13 @@ don't get buried.
   can't read it, default to prompting the user to log. See *Open the
   session: read status, set your journaling posture*.
 - **User reports a fill** (*"I bought / sold / closed / rolled /
-  trimmed / added,"* *"filled,"* *"trade executed"*) → pull the
-  authoritative fill from the broker **before** answering if one is
-  linked; ask the user for the details if not. On a *close* with a
-  broker linked, the fills poller journals the scored outcome for you,
-  so prompt for the exit *why*, not the numbers. See *When the user
-  reports a fill, pull it from the broker first* for the
+  trimmed / added,"* *"filled,"* *"trade executed"*) → read the
+  broker evidence **before** answering if one is linked; ask the user
+  for the details if not. A same-day executed order can be newer than
+  booked transaction history, but only the booked activity is canonical
+  for a journal outcome or realized P&L. On a *close* with a broker
+  linked, prompt for the exit *why*, not the numbers. See *When the user
+  reports a fill, read broker evidence first* for the
   broker-connected vs. no-broker handling.
 - **User records exit *thinking*, not an executed exit** (*"I'm
   thinking about exiting GLD,"* *"I might trim NVDA here,"* *"record
@@ -168,9 +169,9 @@ fetch; just one read of the user's own journal) and returns three things
 that decide how you handle the trade journal for the rest of the
 conversation:
 
-- `broker_linked`: whether a brokerage is connected, so available fills
-  and activity can be reconciled periodically. This is the real link
-  state, not a guess from the plan.
+- `broker_linked`: whether a brokerage is connected, so available booked
+  activity can be reconciled periodically. This is the real link state,
+  not a guess from the plan.
 - `plan`: `"free"`, `"plus"`, or a grandfathered paid plan such as
   `"pro"`.
 - `items_needing_attention`: how many of the user's scored closed trades
@@ -209,7 +210,8 @@ scorecard (see *A close is two records: the outcome and the
 why*). Never open the turn
 with the journal; wow first, log second. At most once per session, and
 only when it fits, you can note that linking a broker (it starts on the
-Plus plan) brings available fills and P&L into periodic reconciliation.
+Plus plan) brings available booked activity and P&L into periodic
+reconciliation.
 It never writes the thesis, tags, or exit reasoning for the user. Keep
 that light: a footnote, not the pitch.
 
@@ -218,15 +220,15 @@ prompt-to-log, plus an activation nudge.**
 Handle the logging itself exactly as the prompt-to-log case, because
 without a link this user's journal is still hand-built. But this user is
 paying for automation they are not getting, so once in the session, name
-it plainly: linking their brokerage makes available fills and backfill
-part of the record, keeps current Account Data in context, and turns on
-periodic reconciliation. They still supply the thesis, rules, tags, and
-notes. Point them at `/dashboard` to link. This is the highest-leverage
-nudge you can make; this segment pays for recurring record work and has
-not activated it.
+it plainly: linking their brokerage makes available booked activity and
+backfill part of the record, keeps current Account Data in context, and
+turns on periodic reconciliation. They still supply the thesis, rules,
+tags, and notes. Point them at `/dashboard` to link. This is the
+highest-leverage nudge you can make; this segment pays for recurring
+record work and has not activated it.
 
 **Plus or a grandfathered paid plan, and linked → confirm-the-why.**
-Available fills and activity reconcile periodically, so your job shifts
+Available booked activity reconciles periodically, so your job shifts
 from "key every fill" to "get the why onto the reconciled record." If
 `items_needing_attention` is above zero, you may *open* the session by
 surfacing the backlog: *"A few trades have closed since we last talked
@@ -234,11 +236,11 @@ and they're missing the why. Want to walk through them?"* Then for each,
 add the rationale and snap the setup to a tag (see *A close is two
 records: the outcome and the why* and *Tag the opening entry so setups
 can be scored*). When the user wants the numbers, reach for
-`summarize_pnl` to show the live scorecard. Don't ask this user to
+`summarize_pnl` to show the recorded scorecard snapshot. Don't ask this user to
 hand-key fill prices or P&L already present in the reconciled activity
 (see *When the user reports a fill*).
 
-The mechanics of each journaling move (pulling broker fills first,
+The mechanics of each journaling move (reading broker evidence first,
 recording exit *intent* vs. an executed close, tagging the opening
 entry, being honest about logged-vs-scored) are detailed in the reflex
 sections below. This section only sets *when you lean in and how hard*;
@@ -607,36 +609,49 @@ Three semantics to carry into the answer:
   result cited without them reads as the whole book, and a thin
   result needs to read as thin.
 
-### When the user reports a fill, pull it from the broker first
+### When the user reports a fill, read broker evidence first
 
 Whenever the user reports that a transaction has happened
 (*"trade executed,"* *"filled,"* *"I bought / sold / closed / rolled
 / trimmed / added,"* or any equivalent), your **first action** is to
-pull the authoritative fill from the broker's transactions tool
-(`get_snaptrade_transactions`), or `get_snaptrade_orders` when the
-fill hasn't settled into transactions yet, for the relevant account.
-Do this **whether or not journaling is on the table**: the broker
-fill is how you ground P&L, confirm the legs that actually executed,
-and catch fills the user didn't think to mention. A close ("I closed
-two QQQ puts") needs this pull exactly as much as an open does. Past
-tense is not a reason to skip it.
+read the relevant account's broker evidence. For *"today,"* *"just
+filled,"* or *"just closed,"* call `get_snaptrade_orders` with
+`state="executed"` first, then check `get_snaptrade_transactions`.
+For older activity, start with transactions. Do this **whether or not
+journaling is on the table**: the reads confirm what evidence is
+available and can catch executions the user did not think to mention.
+A close ("I closed two QQQ puts") needs this read exactly as much as
+an open does. Past tense is not a reason to skip it.
 
-**SnapTrade's activity feed syncs about once a day, so check orders
-before transactions on a same-day fill.** A fill from minutes ago can
-already show up in `get_snaptrade_orders` (`state="executed"`) while
-`get_snaptrade_transactions` still hasn't caught it, since brokerages
-typically push activities to SnapTrade on a daily batch rather than in
-real time. For a fill the user is reporting right now, pull orders
-first, then reconcile against transactions once the activity lands
-(often not until the next sync).
+**Orders and booked transaction history run on different clocks.**
+Orders can update intraday, while brokerages commonly publish booked
+activity later and about once daily. An executed order can therefore
+appear in `get_snaptrade_orders` while `get_snaptrade_transactions`
+has no matching row yet. The order is evidence that an execution was
+reported, but it is not the canonical journal outcome and does not
+license realized P&L, fees, holding-period, scorecard, or tax claims.
+When the booked transaction arrives, reconcile it to the order by
+brokerage order id where possible, let the booked activity supersede
+the order, and never count both as separate fills or add both into a
+quantity or P&L total.
+
+A successful **Sync now** means Slatemark completed a check for
+activity already available. It cannot make the brokerage publish its
+next activity update, and a check that returns no newly booked activity
+does not prove the reported execution did not happen. Explain that
+source timing plainly. Do not declare the journal broken, caught up,
+or current without evidence.
 
 **When a broker tool is connected and linked, never ask the user to
-hand-supply a fill price, quantity, side, or timestamp. Pull it.**
+hand-supply a fill price, quantity, side, or timestamp. Read it.**
 Asking the user to provide what the broker can return is the failure
 mode this section exists to prevent: the broker is authoritative, and
 the user's recall drifts (remembering $103.44 instead of $103.435, or
 rounding the time), which compounds across the journal and poisons
-later reconciliation.
+later reconciliation. If only an executed order is available, state
+that matching booked activity is not yet available and wait for it
+before recording a broker-owned close or P&L. Use only direct tool
+results; do not infer any state the tools did not return.
 
 **When no broker is connected, asking the user for the fill details is
 the correct path, not a fallback.** Many users run Slatemark with no
@@ -656,18 +671,19 @@ me the fill details"* is right; silently asking for manual fills when
 `get_snaptrade_transactions` would have returned them is the failure
 mode.
 
-**A close reconciles itself when a broker is linked.** For a
-broker-connected, fills-syncing user you do **not** hand-journal the
-*close*. When the position goes flat at the broker, the fills poller
-ingests the exit fill, computes the realized P&L server-side, writes
-the scored trade record, and links it back to the opening entry
-(intent ↔ outcome reconciliation). The poller runs on a schedule, so
-the scored row lands on its next pass, not the instant the user
-closes. Don't claim a just-closed trade is already on the scorecard.
-On a broker-linked close, don't reach for the numbers: spend the turn
-on the **rationale**, the one thing automation can never produce (see
-*A close is two records: the outcome and the why* for why that half
-matters and how to capture it).
+**A broker-linked close reconciles after matching booked activity arrives.**
+For a broker-connected, fills-syncing user you do **not** hand-journal the
+*close*. A disappearing holding or executed order is not a canonical
+close. After the matching booked activity arrives, the fills poller
+can compute realized P&L server-side, write the scored trade record,
+and link it back to the opening entry (intent ↔ outcome
+reconciliation). Until then, the open journal entry can truthfully
+remain open even though the user says the brokerage position closed.
+Don't claim a just-closed trade is already on the scorecard, and don't
+fabricate the missing P&L or hand-close the entry while waiting. Spend
+the turn on the **rationale**, the one thing automation can never
+produce (see *A close is two records: the outcome and the why* for why
+that half matters and how to capture it).
 
 **The mechanical sequence below is for two cases:** capturing the
 *opening* intent and tags on a position the user is putting on, and
@@ -678,15 +694,18 @@ you offered; see step 6), run the full reconciliation sequence before
 drafting any journal payload, and do not write any single entry
 without the rest of the picture on the table.
 
-1. **Pull authoritative fill data first**, per the reflex above,
-   *before* drafting any journal payload (use the orders tool when the
-   fill hasn't settled into transactions yet). Never journal a fill
-   price, quantity, side, or timestamp from the user's recall when a
-   broker can return it; on the no-broker path the user's details are
-   the expected source: mark them user-reported.
+1. **Read broker evidence first**, per the reflex above, *before*
+   drafting any journal payload. On a same-day execution, check orders
+   and then transactions. Treat an executed order as execution evidence
+   only; wait for booked activity before recording a broker-owned close,
+   realized P&L, or fees. If both views contain the same execution,
+   reconcile them rather than counting both. Never journal a fill price,
+   quantity, side, or timestamp from the user's recall when a broker can
+   return it; on the no-broker path the user's details are the expected
+   source: mark them user-reported.
 
 2. **Surface every fill that has landed since the prior journal
-   sync, not just the one the user named.** Multi-leg trades,
+   review, not just the one the user named.** Multi-leg trades,
    funding-leg sales, hedge rolls, and related trims commonly
    execute in the same session and only one gets flagged. Walk the
    broker's transactions window (default: last 24h, or back to the
@@ -737,9 +756,9 @@ without the rest of the picture on the table.
    turn has already synced the journal.
 
 The cost of this sequence is one or two extra tool calls before
-the response. The benefit is broker-authoritative fill data on
-every entry, multi-leg trades that don't go half-logged, and
-cross-referenced open entries that stay current. Never skip on a
+the response. The benefit is broker-grounded evidence during journal
+review, multi-leg trades that don't go half-logged, and cross-referenced
+open entries that reflect each reviewed change. Never skip on a
 cold start, even if the user sounds like they have it handled.
 
 ### Exit intent is a plan revision, not a close
@@ -796,11 +815,12 @@ an exit the user is merely considering.
 A close is **two** things, and they land through different paths:
 
 - **The outcome**: exit price, quantity, realized P&L, timestamps.
-  *Broker linked*: the fills poller owns this. It reconciles the
-  exit fill into a scored, server-owned trade record and links it to
-  the opening entry; the broker-computed P&L always supersedes a
-  hand-keyed one, so don't offer to log the exit numbers and don't
-  re-key a figure the poller will compute exactly. *No broker*: the
+  *Broker linked*: the fills poller owns this after matching booked
+  activity arrives. It reconciles that activity into a scored,
+  server-owned trade record and links it to the opening entry; P&L
+  derived from the booked activity supersedes a hand-keyed figure, so
+  don't offer to log the exit numbers and don't fabricate a figure
+  while only an executed order is visible. *No broker*: the
   user's report is the only source, and capturing it is what makes
   the trade scorable. Record the close with `update_journal_entry`
   (`status="closed"`, the exit price, a closing note) **and the net
@@ -823,8 +843,12 @@ A close is **two** things, and they land through different paths:
 Set scorecard expectations to match the path:
 
 - **Broker linked**: the scored row is written by the poller on its
-  next scheduled pass, not the moment the user closes. Say *"the
-  poller will pick this up,"* not *"it's on your scorecard now."*
+  first successful pass after matching booked activity is available,
+  not merely when an order executes or a position disappears. Say
+  *"the order can appear before booked activity; the scorecard updates
+  after that activity arrives and matches,"* not *"it's on your
+  scorecard now."* Repeating Sync now can check again, but cannot force
+  a new upstream activity batch.
 - **No broker, P&L captured**: the trade is scored from the
   `user_realized_pnl` you recorded. This is the right and expected
   path for manual-journal users. Always prompt for the net figure
@@ -867,7 +891,7 @@ least one primary facet, and pick the facet that truthfully fits.
 A thematic or macro trade gets a *theme* or *regime* tag, not a
 setup shoehorned onto it. An entry with a structured `class` already
 covers the *role* facet (the class→role bridge), so don't duplicate
-it. When the position later closes at the broker, reconciliation
+it. After the matching booked close activity arrives, reconciliation
 carries those opening tags onto the scored row, so the bucket is
 legible the moment it is scored. **You do not need to re-tag the
 auto-stub the poller writes;** the tags flow from the opening entry

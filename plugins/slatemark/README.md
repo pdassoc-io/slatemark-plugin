@@ -30,9 +30,9 @@ content hash, and freshness-check URL.
 The plugin connects to `https://slatemark.ai/mcp` with OAuth. There are no
 static credentials in the package. A Slatemark account is required. Free
 includes one constrained MCP connection. Plus adds current brokerage Account
-Data, available past fills imported into the trade journal, available new fills
-imported periodically, short interest history from FINRA, additional active
-AI-client connections, and a higher fair-use limit.
+Data, available past booked activity imported into the trade journal, newly
+available booked activity imported periodically, short interest history from
+FINRA, additional active AI-client connections, and a higher fair-use limit.
 
 ## Boundaries
 
