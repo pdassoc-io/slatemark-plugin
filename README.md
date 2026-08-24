@@ -15,9 +15,9 @@ Plugins Directory.
 ## Install for Claude
 
 For the shortest connector-only setup, open the accepted
-[Slatemark connector listing](https://claude.ai/directory/connectors/slatemark),
-choose **Connect**, and approve the sign-in. The connector does not require
-this plugin or the skill.
+[Slatemark connector listing](https://claude.ai/directory/slatemark),
+choose **Add** or **Connect**, and approve the sign-in. The connector does
+not require this plugin or the skill.
 
 **Claude Code:**
 

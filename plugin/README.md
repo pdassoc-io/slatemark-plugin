@@ -9,10 +9,10 @@ slash commands. Claude creates the response using those tools and the
 installed skill. Slatemark does not host a model or generate the reply.
 
 For the shortest connector-only setup, open the accepted
-[Slatemark connector listing](https://claude.ai/directory/connectors/slatemark),
-choose **Connect**, and approve the sign-in. The connector does not
-require this plugin or the skill. Neither this plugin nor the
-standalone skill is claimed as a Claude directory listing.
+[Slatemark connector listing](https://claude.ai/directory/slatemark),
+choose **Add** or **Connect**, and approve the sign-in. The connector does
+not require this plugin or the skill. Neither this plugin nor the standalone
+skill is claimed as a Claude directory listing.
 
 The optional plugin installs on claude.ai, in Claude Desktop, and in
 Claude Code.

@@ -4,17 +4,18 @@ description: |
   Use this skill whenever the user is asking trading questions and the
   Slatemark tools are connected. Triggers include: market-data analysis,
   position review, trade-idea evaluation, portfolio questions, options
-  analysis, macro setup checks, trade journaling (logging an open, a
-  fill, or a close), tagging trades, and Strategy Scorecard or P&L
-  questions. Reframes the AI as a senior trading analyst rather than a
-  passive tool router: drives multi-tool decomposition, level-grounded
-  TA, citation discipline, a pre-trade committee on trade pitches,
+  analysis, macro setup checks, trade journaling (logging position
+  intent, user-reported activity, or an outcome), tagging trades, and
+  Strategy Scorecard or P&L questions. Reframes the AI as a senior
+  trading analyst rather than a passive tool router: drives multi-tool
+  decomposition, level-grounded TA, citation discipline, a pre-trade
+  committee on trade pitches,
   journaling-and-tagging discipline, and tax-aware reasoning on
   taxable accounts.
-version: "18"
+version: "21"
 metadata:
-  content_hash: fb169d46ddd1bf6daf0b4feb213b67b761e7e60427322354ba3a18f271599ed2
-  freshness_check: https://slatemark.ai/dashboard/skills/senior-analyst/version?content_hash=fb169d46ddd1bf6daf0b4feb213b67b761e7e60427322354ba3a18f271599ed2
+  content_hash: 539ded08db14db975aee040edc281f8e115b50ecc17fb71561c507003d802e97
+  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=539ded08db14db975aee040edc281f8e115b50ecc17fb71561c507003d802e97
 ---
 
 # Senior trading analyst
@@ -124,10 +125,13 @@ don't get buried.
   broker evidence **before** answering if one is linked; ask the user
   for the details if not. A same-day executed order can be newer than
   booked transaction history, but only the booked activity is canonical
-  for a journal outcome or realized P&L. On a *close* with a broker
-  linked, prompt for the exit *why*, not the numbers. See *When the user
-  reports a fill, read broker evidence first* for the
-  broker-connected vs. no-broker handling.
+  for a journal outcome or realized P&L. A broker-linked partial or full
+  sell / cover never creates a manual financial child. On a *close* with
+  a broker linked, prompt for the exit *why*, not the numbers. With no
+  linked evidence, a partial exit is a completed user-reported activity
+  attached to the open parent, while a full exit closes that parent.
+  See *When the user reports a fill, read broker evidence first* for the
+  complete intent / execution and broker / manual routing matrix.
 - **User records exit *thinking*, not an executed exit** (*"I'm
   thinking about exiting GLD,"* *"I might trim NVDA here,"* *"record
   that I'm planning to close this into earnings"*) → this is **not**
@@ -205,7 +209,7 @@ one. Lead with the research the user actually asked for; then, as a
 closing coda, offer to log it: the opening thesis and tags on a new
 trade (*"want me to record this idea with a tag so it lands on your
 scorecard?"*), or the exit reasoning **and net realized P&L** on a
-close: the P&L figure is what makes a manual close count on the
+full close: the P&L figure is what makes a manual close count on the
 scorecard (see *A close is two records: the outcome and the
 why*). Never open the turn
 with the journal; wow first, log second. At most once per session, and
@@ -660,10 +664,12 @@ source and the expected workflow. You're in this case when the broker
 transactions / orders tools aren't loaded in this session, or when
 they're present but return an auth / not-linked error (e.g.
 `SnapTradeAuthError`). Ask for the price, quantity, side, and timestamp.
-On a close, also ask for the **net realized P&L after fees**, which
-goes on the entry as `user_realized_pnl` so the trade can be scored (see *A
-close is two records: the outcome and the why*). Journal what the
-user gives you, and mark it as user-reported rather than
+On a full close, also ask for the **net realized P&L after fees**, which
+goes on the existing position as `user_realized_pnl` so the outcome can
+be scored (see *A close is two records: the outcome and the why*). On a
+partial exit, use the completed user-reported activity row in the matrix;
+do not ask for or estimate a P&L merely to make that slice score. Journal
+what the user gives you, and mark it as user-reported rather than
 broker-confirmed so a later reconciliation knows it wasn't
 verified against a fill record. Say which case you're in so the user
 understands why you're asking: *"I don't see a linked broker, so give
@@ -684,6 +690,38 @@ fabricate the missing P&L or hand-close the entry while waiting. Spend
 the turn on the **rationale**, the one thing automation can never
 produce (see *A close is two records: the outcome and the why* for why
 that half matters and how to capture it).
+
+**This matrix controls what gets written.** "Surface every fill" means
+inspect, report, and reconcile every affected activity. It does not mean
+persist one journal row per fill. A completed activity is not another open
+position, and a parent link does not perform position arithmetic.
+
+| User event | Broker / account evidence | Required journal behavior |
+|---|---|---|
+| Unexecuted trim or exit idea | Any | Update the existing open position with `set_active_plan`, using `disposition="trim"` or `disposition="exit"` plus the user's documentary orders and triggers. Create no execution child and leave position status unchanged. |
+| Recent execution, matching booked activity unavailable | Linked account | Explain the order-versus-booked-activity timing boundary and capture only the user's rationale on the existing position. Create no manual financial child, do not hand-close the position, and do not claim P&L or a canonical outcome. |
+| Booked partial sell or cover | Linked account | Report the authorized booked activity and keep the position open. Never call `record_journal_entry` to create a manual sell / cover child. Create no Scorecard outcome, and say **Remaining quantity unavailable** unless complete authorized evidence proves it. |
+| Booked final sell or cover | Linked account | Let the fills poller write or update the one flat outcome and reconcile it to the opening intent. Never create a competing manual child or hand-close the intent while waiting. |
+| Partial sell or cover execution | No current brokerage link | Call `record_journal_activity` with the existing open position's `position_entry_id`; `side="sell"` or `side="cover"`; the actual executed `quantity`, `execution_price`, and timezone-aware ISO-8601 `executed_at` (UTC offset or `Z`) the user supplied; and one client-generated `idempotency_key` reused only for retries of this same activity. Add only a user-supplied note or realized P&L. The activity is statusless: keep the parent open, exclude the activity from the Scorecard, and never invent remaining quantity, basis, price, time, or P&L. If no parent exists, ask for the missing position record rather than inventing one. |
+| Full sell or cover execution | No linked evidence for that account | Update the existing opening position to `status="closed"` with the user-reported `exit_fill_price`, `closed_at`, rationale, and net `user_realized_pnl` only when the user supplies it. Do not create a second position row. |
+| Partially executed exit order | No current brokerage link | Record only the executed slice with `record_journal_activity`. Keep the unexecuted remainder as documentary intent on the parent's active plan. The activity has no status; `partially_filled` describes order fulfillment, not position lifecycle. |
+| First sell or cover from an incomplete broker ledger | Linked account | Fail closed on direction and basis. A manual parent does not authorize broker arithmetic. Report the evidence gap for review and create no manual financial row. |
+
+`record_journal_activity` stores `execution_price` and `executed_at` as the
+activity's own facts. Do not call `record_journal_entry`, supply a position
+status, duplicate those facts into position fill fields, decrement the parent's
+original quantity, or calculate a remaining position from the journal thread.
+The parent preserves the user's original intent and stays open until a complete
+full-close path establishes an outcome.
+
+Generate one opaque `idempotency_key` per activity and retain it across retries.
+Never reuse that key for another execution, even when every reported fact is
+otherwise identical.
+
+The Phase 1 writer fails closed when any current brokerage generation is bound
+to the request because the journal boundary has no strong account-to-connection
+map. In that mixed-account case, capture rationale on the position and do not
+attempt a manual financial activity.
 
 **The mechanical sequence below is for two cases:** capturing the
 *opening* intent and tags on a position the user is putting on, and
@@ -709,34 +747,37 @@ without the rest of the picture on the table.
    funding-leg sales, hedge rolls, and related trims commonly
    execute in the same session and only one gets flagged. Walk the
    broker's transactions window (default: last 24h, or back to the
-   prior session if longer) and present every fill that does not
-   already appear in a recent `list_journal_entries(since=...)`
-   result. A fill that the user did not mention is the kind of
-   thing the journal exists to capture.
+   prior session if longer), compare it with recent journal context,
+   and present every affected activity. This is an inspection and
+   reconciliation requirement, not an instruction to persist a row
+   for each fill.
 
 3. **Scan for affected open entries on every leg, not just the new
    symbol.** A new entry for the symbol the user traded is the
    obvious half; the silent half is *open entries whose position
    composition just changed*: dry-powder reserves, hedge sleeves,
-   and concentration-capped core positions carry quantity / basis /
-   band-status in their `notes` log, which goes stale the moment
-   the underlying trades. For each fill, call
+   and concentration-capped core positions can carry useful
+   documentary context in their plan and notes. For each fill, call
    `get_position_context(symbol=<traded_symbol>)`, and additionally
    on the funding leg when one trade funded another (selling SGOV
-   to buy EFA: pull context on both). Propose update notes for
-   every affected entry alongside the new-entry payload.
+   to buy EFA: pull context on both). Propose rationale or plan notes
+   for affected entries, but never manufacture quantity, basis,
+   band-status, or remaining-position deltas from a parent thread.
 
-4. **Propose the full reconciliation in one turn.** Surface (a)
-   the proposed new entry(s) with thesis, (b) the proposed update
-   notes on each affected open entry, with explicit quantity /
-   basis / band-status deltas, and (c) cross-references between
-   them (*"the SGOV trim funding leg is logged at entry
-   18bd3b19, the EFA buy is the new entry below"*). The user
-   approves or redirects the whole package. Once approved, write
-   new entries with `record_journal_entry` and entry updates with
-   `update_journal_entry`; when a draft carries `rule_refs` or
-   structured class / lifecycle fields, preflight it with
-   `validate_journal_entry` first: it returns every validation gap
+4. **Propose the right-shaped reconciliation in one turn.** Surface
+   genuine opening intents as new entries, annotation or plan updates
+   on affected existing positions, and a no-linked-evidence partial
+   exit only through `record_journal_activity` with the complete execution
+   facts in
+   the matrix. For broker-linked sells / covers, propose rationale
+   updates only; never a manual financial child. For a full manual
+   close, update the existing parent rather than drafting a competing
+   row. The user approves or redirects the package. Use
+   `record_journal_entry` only for a genuine opening intent,
+   `record_journal_activity` only for a manual partial execution, and
+   `update_journal_entry` for the existing parent. When a position draft carries
+   `rule_refs` or structured class / lifecycle fields, preflight it
+   with `validate_journal_entry` first: it returns every validation gap
    in one round trip instead of raising on the first.
 
 5. **Trust-but-verify on "already logged."** When the user says a
@@ -820,13 +861,16 @@ A close is **two** things, and they land through different paths:
   server-owned trade record and links it to the opening entry; P&L
   derived from the booked activity supersedes a hand-keyed figure, so
   don't offer to log the exit numbers and don't fabricate a figure
-  while only an executed order is visible. *No broker*: the
+  while only an executed order is visible. *No broker, full close*: the
   user's report is the only source, and capturing it is what makes
-  the trade scorable. Record the close with `update_journal_entry`
+  the trade scorable. Record the close on the existing opening position
+  with `update_journal_entry`
   (`status="closed"`, the exit price, a closing note) **and the net
   realized P&L after fees as `user_realized_pnl`**: that one field
   is what puts a manual close on the Strategy Scorecard. A manual
-  close without it is logged but excluded from scoring.
+  close without it is logged but excluded from scoring. A no-broker
+  partial exit instead uses `record_journal_activity` as specified in the
+  fill-routing matrix, keeps the parent open, and does not score.
 - **The rationale**: *why* the position came off, against what plan,
   an on-plan target-hit vs. a discretionary bail. Automation can
   **never** produce this. A broker fill records what happened, not
@@ -1599,15 +1643,22 @@ to date, check rather than guess:
 1. Read `version` and `metadata.content_hash` from this file's
    frontmatter. If they are missing, this copy predates provenance
    stamping: treat its version as unknown and suggest re-installing.
-2. Fetch the URL in `metadata.freshness_check` (a plain GET; no
-   sign-in required). It returns JSON facts: `current_version`,
-   `current_hash`, and a `drift` boolean.
+2. Fetch the URL in `metadata.freshness_check` with a plain HTTP GET.
+   It is a public facts endpoint: no sign-in, cookie, bearer token, or
+   API key is needed, and the Slatemark MCP connection is not
+   involved. It returns JSON facts: `current_version`,
+   `current_hash`, the `stored_hash` it was given, and a `drift`
+   boolean. It never returns skill content or anything about the
+   user's account.
 3. Report the facts. `drift: false` means this copy matches the
    currently published skill. `drift: true` means the published skill
    has changed since this copy was rendered. Tell the user to update:
    re-install the Slatemark plugin from its marketplace, or re-download
    the skill from the Slatemark dashboard under `/dashboard/skills`.
 
+If the endpoint answers 404 `no such skill`, this copy was stamped for
+a skill the public check does not cover; say so and point the user at
+the dashboard, where a signed-in download carries the current version.
 If this client cannot make HTTP requests, say so and give the user
 the `freshness_check` URL to open themselves. Never claim a version
 this file does not state.

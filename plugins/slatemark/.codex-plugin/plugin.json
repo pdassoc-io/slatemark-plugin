@@ -1,6 +1,6 @@
 {
   "name": "slatemark",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "No signals. Receipts. Read-only delayed market data and a trade journal for Codex. The AI creates each response using Slatemark's remote MCP tools and user-installed skills. A Slatemark account is required; Free includes one constrained MCP connection.",
   "author": {
     "name": "Slatemark",
