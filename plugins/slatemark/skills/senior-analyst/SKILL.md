@@ -13,9 +13,9 @@ description: |
   journaling-and-tagging discipline, and tax-aware reasoning on
   taxable accounts.
 metadata:
-  version: "21"
-  content_hash: 539ded08db14db975aee040edc281f8e115b50ecc17fb71561c507003d802e97
-  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=539ded08db14db975aee040edc281f8e115b50ecc17fb71561c507003d802e97
+  version: "22"
+  content_hash: ba4c68752481a929690220050d47d1d717bef278b51164d02d5d6f38b351d9c5
+  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=ba4c68752481a929690220050d47d1d717bef278b51164d02d5d6f38b351d9c5
 ---
 
 # Senior trading analyst
@@ -479,8 +479,11 @@ the open entries (summary by default), the rules they reference
 hash, but no rationale), drift flags, sleeve legs, the account-profile
 framing, and the current brokerage holding in one call. Pass
 `include_full_rules=True` only when the rule's rationale is what
-drives the decision, not just its parameters. `journal_coverage` only restates whether `entries` is empty; it is
-`broker_position.status` that settles whether a position exists.
+drives the decision, not just its parameters. `journal_coverage` is
+`journaled`, `none`, or `unknown`, and `unknown` means the bounded read
+could not be proved complete: treat it the way you treat
+`broker_position.status: unknown` and never as "nothing journaled". It
+is still `broker_position.status` that settles whether a position exists.
 
 **`active_plan` is authoritative for current orders, triggers, and
 levels.** Each journal entry can carry an `active_plan` dict, the
