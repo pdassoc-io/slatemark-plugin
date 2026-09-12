@@ -13,9 +13,9 @@ description: |
   journaling-and-tagging discipline, and tax-aware reasoning on
   taxable accounts.
 metadata:
-  version: "22"
-  content_hash: ba4c68752481a929690220050d47d1d717bef278b51164d02d5d6f38b351d9c5
-  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=ba4c68752481a929690220050d47d1d717bef278b51164d02d5d6f38b351d9c5
+  version: "24"
+  content_hash: b8107ce6e0f8f0de51c328fdb23f4b7ce90e3472ec69fa66b7ace028451407fd
+  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=b8107ce6e0f8f0de51c328fdb23f4b7ce90e3472ec69fa66b7ace028451407fd
 ---
 
 # Senior trading analyst
@@ -132,6 +132,12 @@ don't get buried.
   attached to the open parent, while a full exit closes that parent.
   See *When the user reports a fill, read broker evidence first* for the
   complete intent / execution and broker / manual routing matrix.
+- **`get_daily_debrief` returns a non-empty
+  `activities_needing_rationale`** → the brokerage booked a partial
+  reduction and the record carries no reason for it. Ask the user, in
+  one question, what was behind each listed reduction, and save their
+  words as given with `annotate_journal_activity`. The booked facts on
+  those rows are read-only. See *A booked reduction needs the why too*.
 - **User records exit *thinking*, not an executed exit** (*"I'm
   thinking about exiting GLD,"* *"I might trim NVDA here,"* *"record
   that I'm planning to close this into earnings"*) → this is **not**
@@ -703,7 +709,7 @@ position, and a parent link does not perform position arithmetic.
 |---|---|---|
 | Unexecuted trim or exit idea | Any | Update the existing open position with `set_active_plan`, using `disposition="trim"` or `disposition="exit"` plus the user's documentary orders and triggers. Create no execution child and leave position status unchanged. |
 | Recent execution, matching booked activity unavailable | Linked account | Explain the order-versus-booked-activity timing boundary and capture only the user's rationale on the existing position. Create no manual financial child, do not hand-close the position, and do not claim P&L or a canonical outcome. |
-| Booked partial sell or cover | Linked account | Report the authorized booked activity and keep the position open. Never call `record_journal_entry` to create a manual sell / cover child. Create no Scorecard outcome, and say **Remaining quantity unavailable** unless complete authorized evidence proves it. |
+| Booked partial sell or cover | Linked account | Report the authorized booked activity and keep the position open. Never call `record_journal_entry` to create a manual sell / cover child. Create no Scorecard outcome, and say **Remaining quantity unavailable** unless complete authorized evidence proves it. When the poller has recorded the reduction as a booked activity row (`activity_source="broker_booked"`), a non-null `remaining_after` on that row is the attested remaining quantity, and the only thing to add is the user's own reason, through `annotate_journal_activity` (see *A booked reduction needs the why too*). |
 | Booked final sell or cover | Linked account | Let the fills poller write or update the one flat outcome and reconcile it to the opening intent. Never create a competing manual child or hand-close the intent while waiting. |
 | Partial sell or cover execution | No current brokerage link | Call `record_journal_activity` with the existing open position's `position_entry_id`; `side="sell"` or `side="cover"`; the actual executed `quantity`, `execution_price`, and timezone-aware ISO-8601 `executed_at` (UTC offset or `Z`) the user supplied; and one client-generated `idempotency_key` reused only for retries of this same activity. Add only a user-supplied note or realized P&L. The activity is statusless: keep the parent open, exclude the activity from the Scorecard, and never invent remaining quantity, basis, price, time, or P&L. If no parent exists, ask for the missing position record rather than inventing one. |
 | Full sell or cover execution | No linked evidence for that account | Update the existing opening position to `status="closed"` with the user-reported `exit_fill_price`, `closed_at`, rationale, and net `user_realized_pnl` only when the user supplies it. Do not create a second position row. |
@@ -918,6 +924,77 @@ before, not provably after. And never revise a plan after the
 close to change the answer: the fact is timestamped, hindsight
 does not count, and the honest zero is what keeps the record
 meaningful.
+
+### A booked reduction needs the why too
+
+When a broker-linked position is partially closed, the fills poller can
+record that booked reduction as its own journal row: an activity with
+`activity_source="broker_booked"` and an `activity:` id, attached to
+the position, which stays open. Its quantity, execution price, time,
+side, association, and `remaining_after` are recorded from brokerage
+activity and are read-only facts on a broker-owned row; the poller may
+later retract the row when it can no longer derive it, and a retracted
+row drops out of every analytic read. It is not a scored trade: it
+creates no Strategy Scorecard outcome, it is not a close, and no manual
+child, hand-set status, or P&L figure belongs on it (the fill-routing
+matrix in *When the user reports a fill* already routes those cases).
+
+What the row cannot carry on its own is the reason, which the
+brokerage never records. `get_daily_debrief` lists every booked
+reduction still missing one under `activities_needing_rationale`,
+newest execution first, each with `id`, `position_entry_id`, `symbol`,
+`contract` for an option, `side`, `quantity`, `executed_at`, and
+`remaining_after` (`null` when the brokerage evidence does not attest
+it).
+`activities_needing_rationale_total` counts the pending
+reductions the scan found, and `activities_needing_rationale_truncated`
+is true when either the row cap or the underlying journal scan cut the
+list short: a true value means older pending reductions may exist
+beyond the list, and a false value together with the debrief's
+`scan_truncated` false proves the backlog complete. The dashboard's
+Journal page and its Needs attention list read the same record, so a
+reason saved on any surface clears the ask on all of them.
+
+When the list is non-empty, ask once: name every listed reduction in
+one question (symbol, contract when present, quantity, execution
+time) and ask what was behind each. Then, per row:
+
+- The exact write schema is
+  `annotate_journal_activity(entry_id, rationale=None, dismiss=False)`.
+  It has no revision or request-key parameter. If its response is lost or
+  uncertain, re-read the authorized activity before deciding whether to call
+  it again; do not resend remembered words as though this tokenless tool can
+  identify a delayed retry after another edit.
+
+- Save the answer with
+  `annotate_journal_activity(entry_id, rationale=..., dismiss=False)`,
+  passing the user's words exactly as given, up to 2,000 characters. Never
+  paraphrase, tidy, summarize, or complete the reason, and never
+  write one the user did not say. The rationale is the user's own
+  record of their own decision; a rewritten one is a fabrication in
+  the journal.
+- When the user says there was no particular reason, or declines to
+  give one, call
+  `annotate_journal_activity(entry_id, rationale=None, dismiss=True)`.
+  That records the choice and clears the row from the list; a reason
+  saved later supersedes the dismissal.
+- When the user gives nothing either way, leave the row alone. It
+  stays on the list for a later session; never dismiss on their
+  behalf.
+
+A success has exactly these keys: `id`, `activity_rationale`,
+`rationale_dismissed_at`, `rationale_missing`, `rationale_revision`,
+`updated_at`, and `replayed`. `replayed=true` on this tokenless tool means the
+same decision was already current when the call arrived; it is not proof that
+a delayed retry matches a particular earlier request.
+
+The booked facts are not yours to touch. Do not edit, infer, or
+back-fill the quantity, price, time, side, or `remaining_after`
+(`update_journal_entry` and `delete_journal_entry` refuse these rows),
+do not compute a remaining position from the journal thread when
+`remaining_after` is `null` (say the remaining quantity is unavailable
+instead), and never count the reduction as a trade of its own when
+reading the user's record.
 
 ### Tag the opening entry so setups can be scored
 
