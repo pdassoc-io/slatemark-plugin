@@ -1,23 +1,34 @@
 ---
 name: earnings-setup
-description: 'Frame an earnings print as a volatility event before a directional one: the
-  implied move, the straddle, IV term structure and percentile, and the history of the reaction.'
+description: Review an earnings event using sourced dates, current option premiums, and supported
+  historical reactions.
 ---
 
 <!-- Generated from marketplace/plugin/commands by scripts/build_plugin_skill.py; do not edit. -->
 
 Use the current request as the workflow input. Ask for any required ticker or trade details it does not provide.
 
-Use only tools available on the user's plan. If a requested section is unavailable, identify the missing part and continue with the available evidence. Never infer data that was not returned.
+Use only tools available on the user's plan. Read saved context before
+asking for missing inputs. Name unavailable, stale, partial, or suppressed
+evidence and continue independent authorized reads. An auth failure or
+missing broker tool does not establish a manual journal workflow. Never
+infer data that was not returned. Cite sources, dates, and coverage.
+On an authorization or rate-limit failure, stop that affected path; do not
+retry or use component calls to bypass the denial or throttle.
 
 Run an Earnings Setup on the current request using the connected Slatemark tools.
-Frame the print as a volatility event before a directional one:
+Read the event date and whether its timing is estimated. For relevant
+expirations, use `analyze_option_chain` for ATM straddle marks, IV term
+structure, and skew; apply `get_rule("options-liquidity-gates")` to quoted
+contracts. State the expiration and timestamp of each comparison.
 
-- the implied move into the print and the ATM straddle;
-- the IV term structure and the 30-day IV percentile (the bar the report
-  has to clear);
-- the history of how the name has reacted to its own implied move over
-  recent quarters (does it tend to over- or under-deliver?).
+The straddle premium/underlying is a move proxy for that expiration,
+not a one-sigma range, success probability, or isolated earnings-day move.
+The current chain does not provide historical IV rank, percentile, or
+prior event-implied moves. Cite those only from a separate historical
+options source. Dated underlying history can establish past price
+reactions, but cannot reconstruct past option premiums.
 
-Stay on what is priced and how the name has behaved. The setup is the
-analysis; it is not a call on the print.
+Explain what the evidence supports, competing explanations, and missing
+comparisons. Do not infer a premium-buying or selling advantage from IV
+alone, predict the print, or instruct an order.

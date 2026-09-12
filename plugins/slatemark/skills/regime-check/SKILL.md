@@ -1,35 +1,27 @@
 ---
 name: regime-check
-description: 'Run a cross-asset regime check before any single-name view: the curve, the dollar,
-  credit, financial conditions, and vol, plus where the dislocations are.'
+description: Review the requested cross-asset backdrop using a composite read and relevant
+  follow-ups.
 ---
 
 <!-- Generated from marketplace/plugin/commands by scripts/build_plugin_skill.py; do not edit. -->
 
-Use only tools available on the user's plan. If a requested section is unavailable, identify the missing part and continue with the available evidence. Never infer data that was not returned.
+Use only tools available on the user's plan. Read saved context before
+asking for missing inputs. Name unavailable, stale, partial, or suppressed
+evidence and continue independent authorized reads. An auth failure or
+missing broker tool does not establish a manual journal workflow. Never
+infer data that was not returned. Cite sources, dates, and coverage.
+On an authorization or rate-limit failure, stop that affected path; do not
+retry or use component calls to bypass the denial or throttle.
 
-Run a Regime Check using the connected Slatemark tools. Pull the
-cross-asset backdrop into one read before taking any single-name view.
+Run a Regime Check using the connected Slatemark tools.
+Start with `analyze_market_regime`, the one-call composite for the rate
+complex, dollar trend, credit ratio, volatility, and cross-asset
+correlations. It uses delayed public market data and needs no broker link.
 
-Start with `analyze_market_regime`, the one-call composite that fetches
-the whole backdrop in a single pass:
-
-- the rate complex and yield-curve slope (steepening / flattening,
-  inverted / positive);
-- the dollar trend;
-- the high-yield vs investment-grade credit ratio and its percentile;
-- the vol regime (VIX level and percentile, plus SPY realized-vol
-  percentile);
-- a rolling cross-asset correlation matrix over the major assets, with
-  the stock-bond correlation called out.
-
-It runs on delayed public market data, so it works with no broker link.
-Reach for the individual tools only to drill into a reading that stands
-out or to add context the composite does not carry: real yields and a
-financial-conditions read (FRED series), recent Treasury auction demand
-and TGA cash, or a longer correlation history.
-
-Then name the regime and ask where the dislocations are: the
-cross-asset tension worth watching. Frame it as a read of the weather,
-not a position. The question is what backdrop the user is trading in,
-never a call to act.
+Read the returned components, windows, and coverage. Use individual tools
+only for relevant gaps or a requested deeper comparison, such as real
+yields or financial conditions. Distinguish the computed regime from
+your inference, weigh conflicting components, and describe what evidence
+would change the assessment. Do not treat this as a prerequisite for every
+single-name factual question or as a signal to act.

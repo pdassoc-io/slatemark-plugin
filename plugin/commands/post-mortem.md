@@ -1,31 +1,43 @@
 ---
-description: Run a post-mortem on a trade you just closed: separate what happened from why, preserve its journal rationale, and tag it for Scorecard reconciliation.
+description: Review a completed trade against recorded intent and preserve the user's own explanation.
 argument-hint: [ticker]
 ---
 
+Use only tools available on the user's plan. Read saved context before
+asking for missing inputs. Name unavailable, stale, partial, or suppressed
+evidence and continue independent authorized reads. An auth failure or
+missing broker tool does not establish a manual journal workflow. Never
+infer data that was not returned. Cite sources, dates, and coverage.
+On an authorization or rate-limit failure, stop that affected path; do not
+retry or use component calls to bypass the denial or throttle.
+
 Run a Post-Mortem on the trade described in $ARGUMENTS using the
-connected Slatemark tools. If a broker is linked and the execution was
-today, check executed orders before booked transactions. An order can
-appear first, but booked activity remains canonical for the journal and
-realized P&L. Spend the turn on the why while that activity is not yet
-available.
+connected Slatemark tools. Read the existing record before asking for
+facts or creating another record. With an authorized linked broker and
+a same-day execution, check executed orders before booked transactions.
+An order may appear first, but booked activity remains canonical for
+financial outcomes. Until it arrives, capture the user's rationale; do not
+hand-close the entry or invent P&L or a manual financial child. If order
+and booked activity describe the same execution, never count both.
+Sync now cannot force upstream publication; no new activity does not
+disprove the execution. Do not infer any state the tools did not return.
 
-- Separate *what happened* (the price action, the catalyst, the levels
-  that held or broke) from *why it happened* (entry timing, sizing, the
-  thesis, on-plan versus discretionary).
-- Then record it: snap the setup to a canonical tag (use the tag tools)
-  and preserve the user's rationale. With a broker linked, do not
-  hand-close the entry or invent P&L while only an executed order is
-  visible. The Strategy Scorecard updates after matching booked activity
-  arrives and reconciles. If both order and activity are visible, treat
-  them as the same execution and never count both. A successful Sync now
-  with no newly booked activity does not disprove the execution or mean
-  the journal is broken. Use direct tool results only; do not infer any
-  state the tools did not return. With no broker linked, ask for
-  the net realized P&L after fees and record it on the close, since that
-  is what makes the trade score.
-- Name the one repeatable lesson. Run this on winners and losers; the
-  losers are where the lesson is.
+- Compare recorded intent and what happened, keeping observations separate
+  from causal interpretation. Missing records cannot prove bad discipline.
+- Preserve the user's own rationale and applicable canonical tags. For a
+  booked partial reduction, use `annotate_journal_activity` with the reason
+  verbatim; leave financial facts and parent status unchanged. It is not
+  a Scorecard outcome. Re-read before retrying an uncertain annotation.
+- In a verified manual workflow (manual record and established absence of
+  a current brokerage link), a full executed close updates the existing
+  parent with `status="closed"`, user-supplied `exit_fill_price`, `closed_at`,
+  and net `user_realized_pnl` after fees. Without that P&L it is logged,
+  not scored. A manual partial execution instead uses statusless
+  `record_journal_activity`, preserving the parent's original quantity.
+  Missing tools, failed reads, and auth errors do not prove this eligibility.
+- Save only authorized user content. Ask for missing facts, not repeated
+  permission to record facts already supplied for that purpose. Do not
+  backdate an exit plan or manufacture a lesson from a single outcome.
 
-This records the user's own reasoning. It is not advice and never tells
-the user what to trade next.
+Identify a tentative process observation only when evidence supports it.
+The user's own reasoning stays theirs; never direct the next trade.
