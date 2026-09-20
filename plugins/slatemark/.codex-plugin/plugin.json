@@ -1,6 +1,6 @@
 {
   "name": "slatemark",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "No signals. Receipts. Read-only delayed market data and a trade journal for Codex. The AI creates each response using Slatemark's remote MCP tools and user-installed skills. A Slatemark account is required; Free includes one constrained MCP connection.",
   "author": {
     "name": "Slatemark",
@@ -38,7 +38,7 @@
       "Which published AAPL filings and FOMC dates fall within the next 30 days?",
       "Add a note to my journal that I opened a starter position in MSFT."
     ],
-    "brandColor": "#3ee07f",
+    "brandColor": "#93d8c4",
     "composerIcon": "./assets/slatemark-mark.svg",
     "logo": "./assets/slatemark-mark.svg",
     "screenshots": []
