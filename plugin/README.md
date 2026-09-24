@@ -1,20 +1,23 @@
 # Slatemark Claude plugin
 
-**No signals. Receipts.**
+**Market data and analytics for your AI.**
 
-This optional bundle wires Claude to Slatemark: the remote MCP connector
-(read-only delayed market data, macro, filings, and your trade journal)
-plus a user-installed senior-analyst skill, and in Claude Code, workflow
-slash commands. Claude creates the response using those tools and the
-installed skill. Slatemark does not host a model or generate the reply.
+This bundle connects supported Claude clients to Slatemark's delayed market
+data, technical calculations, SEC filings, and macroeconomic research. Your
+private journal and the bundled senior-analyst skill are optional context;
+Claude Code also receives workflow slash commands. Slatemark supplies factual
+tool results, and Claude creates the response.
 
-For the shortest connector-only setup, open the accepted
+The Claude provider plugin is submitted and pending review. It has no public
+plugin listing URL, so use the Git marketplace install path below for the
+full bundle. For connector-only setup,
+open the accepted
 [Slatemark connector listing](https://claude.ai/directory/slatemark),
 choose **Add** or **Connect**, and approve the sign-in. The connector does
-not require this plugin or the skill. Neither this plugin nor the standalone
-skill is claimed as a Claude directory listing.
+not require this plugin or the skill. The exact connector URL is not the plugin
+listing; the standalone customized skill has no separate listing recorded.
 
-The optional plugin installs on claude.ai, in Claude Desktop, and in
+The plugin installs on claude.ai, in Claude Desktop, and in
 Claude Code.
 
 ## Install
@@ -45,32 +48,41 @@ additional active AI-client connections, and higher fair-use limits.
 
 ## Try this first
 
-After install, start with one workflow instead of a blank chat:
-<https://slatemark.ai/first-workflow>. The page gives copyable prompts
-for a pre-trade brief, position review, earnings setup, regime check,
-catalyst map, post-mortem, and journal entry.
+After install, use the Free research workflow at
+<https://slatemark.ai/first-workflow>:
+
+> Show AAPL's latest available quote and latest non-null daily RSI(14) and
+> ATR(14). Keep quote and indicator timestamps separate, and include each
+> tool's source plus available `as_of`, `fetched_at`, and `data_quality` fields.
+
+It needs no journal entry, brokerage link, paid plan, or provider key. It does
+require an authenticated, available Free connection, sufficient daily history,
+and an available market-data source. If a value or source is unavailable,
+Claude should say so without inventing evidence. The page also offers
+additional research and optional journal workflows.
 
 ## What's in the box
 
 - **Remote MCP connector** (`https://slatemark.ai/mcp`, OAuth): the same
-  hosted server as every other client, with the read-only tool surface
-  available on your plan and your per-user trade journal.
-- **`senior-analyst` skill**: a user-installed methodology Claude can
-  use with the tools. At session start it calls `get_session_status` to
-  choose connected-account or manual journal context.
+  hosted server as every other supported client, with factual research tools
+  available on your plan and your optional private journal.
+- **`senior-analyst` skill**: bundled visible methodology Claude can
+  use with the tools. Factual lookups do not need a session-status or journal
+  read; broader reviews use saved context only when relevant.
 - **Workflow slash commands** (Claude Code):
-  - `/slatemark:pre-trade-brief [ticker] [horizon]`
-  - `/slatemark:post-mortem [ticker]`
-  - `/slatemark:regime-check`
-  - `/slatemark:position-review [ticker]`
   - `/slatemark:catalyst-map [ticker] [horizon]`
+  - `/slatemark:regime-check`
+  - `/slatemark:pre-trade-brief [ticker] [horizon]`
+  - `/slatemark:position-review [ticker]`
   - `/slatemark:earnings-setup [ticker]`
+  - `/slatemark:post-mortem [ticker]`
 
 ## Notes
 
-- Read-only. Slatemark never places, modifies, or cancels an order; every
-  trading decision is yours. Nothing here is personalized investment
-  advice.
+- Market, research, and brokerage access is read-only. User-directed journal
+  writes change only your Slatemark records. Slatemark never places,
+  modifies, or cancels an order; every trading decision is yours. Nothing
+  here is personalized investment advice.
 - Market data is approximately 15 minutes delayed and labeled with its
   freshness. Brokerage connections provide Account Data, not market data.
   Option-chain snapshots are delayed, available only where listed,
@@ -87,8 +99,8 @@ catalyst map, post-mortem, and journal entry.
 ## Compatible AI clients
 
 This package is specific to Claude. The same public git marketplace also
-contains a native Codex package under `plugins/slatemark/`; it has no ChatGPT
-app mapping and is not an accepted OpenAI directory listing. Any compatible
-AI client can connect to the hosted server at `https://slatemark.ai/mcp`
-using its own setup flow. Claude's connector acceptance does not confer an
-OpenAI listing.
+contains a native Codex package under `plugins/slatemark/`; the OpenAI
+submission is pending review and is not an accepted directory listing. Other
+supported clients can connect to the hosted server at
+`https://slatemark.ai/mcp` using their own setup flow. Claude's connector
+acceptance does not confer an OpenAI listing.
