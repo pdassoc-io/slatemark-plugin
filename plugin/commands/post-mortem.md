@@ -1,6 +1,6 @@
 ---
 description: Review a completed trade against recorded intent and preserve the user's own explanation.
-argument-hint: [ticker]
+argument-hint: "[ticker]"
 ---
 
 Use only tools available on the user's plan. Read saved context before

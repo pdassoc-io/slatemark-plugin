@@ -1,6 +1,6 @@
 ---
 description: Map sourced events in a requested window, preserving estimated dates and coverage gaps.
-argument-hint: [ticker] [horizon]
+argument-hint: "[ticker] [horizon]"
 ---
 
 Use only tools available on the user's plan. Read saved context before

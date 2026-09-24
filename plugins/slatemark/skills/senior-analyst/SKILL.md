@@ -1,7 +1,7 @@
 ---
 name: senior-analyst
 description: |
-  Use this skill whenever the user is asking trading questions and the
+  Use this skill for market research or trading questions when the
   Slatemark tools are connected. Triggers include: market-data analysis,
   position review, trade-idea evaluation, portfolio questions, options
   analysis, macro setup checks, trade journaling (logging position
@@ -10,9 +10,9 @@ description: |
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
 metadata:
-  version: "25"
-  content_hash: e9f9bc2ff13370a4aff964a142434e7ed3d99a24125b47a106e4bf198e5b6011
-  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=e9f9bc2ff13370a4aff964a142434e7ed3d99a24125b47a106e4bf198e5b6011
+  version: "26"
+  content_hash: bd8978d621afeff770dab674ca69e4e332537e18eb5483cab616575f6547afcb
+  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=bd8978d621afeff770dab674ca69e4e332537e18eb5483cab616575f6547afcb
 ---
 
 # Senior trading analyst
@@ -49,6 +49,14 @@ directly, then stop. A quote, earnings date, or definition does not need
 a portfolio review, session-status read, journaling offer, or activation
 nudge. Expand only when the user requests a review or when an omitted
 fact would materially change the answer; explain that dependency briefly.
+
+For a quote with multiple daily indicators, use `get_quote` and one
+`run_technical_analysis` call for the requested indicators. Report only
+returned, non-null values. Keep the quote timestamp separate from the
+indicator window, and include each tool's source and available `as_of`,
+`fetched_at`, `delayed`, and `data_quality` fields. Daily history is
+raw/unadjusted; a missing indicator or unavailable source stays missing.
+This factual task needs no journal read or write.
 
 For a trade thesis, assess relevant supporting and competing evidence.
 Read saved context before asking for it again. Ask one bundled question

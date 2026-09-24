@@ -1,6 +1,6 @@
 ---
 description: Review an earnings event using sourced dates, current option premiums, and supported historical reactions.
-argument-hint: [ticker]
+argument-hint: "[ticker]"
 ---
 
 Use only tools available on the user's plan. Read saved context before

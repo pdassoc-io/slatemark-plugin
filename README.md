@@ -1,20 +1,25 @@
 # Slatemark plugin marketplace
 
-**No signals. Receipts.**
+**Market data and analytics for your AI.**
 
-This public repository distributes Slatemark's optional client plugins for
-Claude and Codex. Both packages connect to the same OAuth-protected Slatemark
-MCP server and install user-chosen methodology alongside it. The AI client
-creates each response. Slatemark does not host a model or generate the reply.
+This public repository distributes Slatemark packages for supported Claude and
+Codex clients. Both connect to the same OAuth-protected Slatemark MCP server
+for delayed market data, technical calculations, SEC filings, and
+macroeconomic research. Your private journal and the bundled methodology are
+optional context. Slatemark supplies factual tool results; your AI client
+creates each response.
 
-Git marketplace availability is not a Claude or OpenAI directory listing.
-Claude's connector-only listing is accepted separately; the native Codex
-package has not been submitted to or accepted by OpenAI for the universal
+Git marketplace availability is not a Claude or OpenAI directory listing. The
+Claude provider plugin is submitted and pending review, with no public plugin
+listing URL; Claude's published connector-only listing remains separate. The OpenAI submission
+is pending review and is not yet accepted or published in the universal
 Plugins Directory.
 
 ## Install for Claude
 
-For the shortest connector-only setup, open the accepted
+Use the public Git marketplace for the full bundle while the Claude provider
+plugin is pending review. Do not invent a provider-plugin deep link. For connector-only setup,
+open the accepted
 [Slatemark connector listing](https://claude.ai/directory/slatemark),
 choose **Add** or **Connect**, and approve the sign-in. The connector does
 not require this plugin or the skill.
@@ -46,8 +51,9 @@ native package includes the connector, the `senior-analyst` skill, and six
 focused workflow skills. See
 [`plugins/slatemark/README.md`](plugins/slatemark/README.md).
 
-Neither git install registers a ChatGPT app. ChatGPT availability requires a
-separate OpenAI Developer Platform submission and approval.
+Neither git install registers a ChatGPT app. The OpenAI Developer Platform
+submission is pending review; ChatGPT availability still requires approval and
+publication.
 
 ## Connection and plans
 
@@ -59,8 +65,17 @@ activity imported periodically, short interest history from FINRA, additional
 active AI-client connections, and a higher fair-use limit. Sign up at
 <https://slatemark.ai>.
 
-After installation, start with one focused workflow instead of a blank chat:
-<https://slatemark.ai/first-workflow>.
+After installation, start with this Free research workflow in a supported
+client. Copy the full question from <https://slatemark.ai/first-workflow>:
+
+> Show AAPL's latest available quote and latest non-null daily RSI(14) and
+> ATR(14). Keep quote and indicator timestamps separate, and include each
+> tool's source plus available `as_of`, `fetched_at`, and `data_quality` fields.
+
+It needs no journal entry, brokerage link, paid plan, or provider key. It does
+require an authenticated, available Free connection, sufficient daily history,
+and an available market-data source. Report missing values or source failures
+as missing; do not invent a result.
 
 ## What this is and isn't
 

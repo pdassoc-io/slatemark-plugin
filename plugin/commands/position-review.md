@@ -1,6 +1,6 @@
 ---
 description: Review current evidence against a held position's recorded thesis and framework rules.
-argument-hint: [ticker]
+argument-hint: "[ticker]"
 ---
 
 Use only tools available on the user's plan. Read saved context before

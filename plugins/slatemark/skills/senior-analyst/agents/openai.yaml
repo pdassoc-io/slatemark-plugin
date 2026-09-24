@@ -1,7 +1,7 @@
 interface:
   display_name: "Senior Analyst"
-  short_description: "Apply Slatemark analyst methodology"
-  default_prompt: "Use $senior-analyst to research my trading question with Slatemark."
+  short_description: "Research markets with Slatemark tools"
+  default_prompt: "Use $senior-analyst to show AAPL's latest available quote and latest non-null daily RSI(14)/ATR(14), with separate timestamps and source fields."
 dependencies:
   tools:
     - type: "mcp"

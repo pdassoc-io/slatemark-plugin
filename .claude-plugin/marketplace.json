@@ -1,5 +1,6 @@
 {
   "name": "slatemark-plugin",
+  "description": "Market data and analytics for external AI clients",
   "owner": {
     "name": "Slatemark",
     "url": "https://slatemark.ai"
@@ -8,7 +9,7 @@
     {
       "name": "slatemark",
       "source": "./plugin",
-      "description": "No signals. Receipts. Read-only delayed market data and a trade journal for Claude. Claude creates each response using Slatemark's remote MCP tools and a user-installed senior-analyst skill. A Slatemark account is required; Free includes one constrained MCP connection.",
+      "description": "Market data and analytics for your AI. Connect a supported Claude client to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and the installed analyst skill are optional context. Slatemark supplies factual tool results; Claude creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
       "homepage": "https://slatemark.ai",
       "keywords": [
         "trading",

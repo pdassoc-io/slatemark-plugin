@@ -1,6 +1,6 @@
 ---
 description: Review a proposed trade against relevant evidence, the user's framework, and recorded intent.
-argument-hint: [ticker] [horizon]
+argument-hint: "[ticker] [horizon]"
 ---
 
 Use only tools available on the user's plan. Read saved context before
