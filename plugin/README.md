@@ -46,6 +46,23 @@ AI-client connection. Plus adds current brokerage Account Data,
 available booked-activity and backfill import, periodic reconciliation, FINRA,
 additional active AI-client connections, and higher fair-use limits.
 
+## Update in Claude Code
+
+For an existing Git marketplace install, refresh the marketplace and then the
+plugin:
+
+```text
+claude plugin marketplace update slatemark-plugin
+claude plugin update slatemark@slatemark-plugin
+claude plugin list
+```
+
+In a local Claude Code `2.1.178` check on 2026-09-28, this manual path moved
+the installed plugin from `0.3.0` to `0.4.0`. A fresh `plugin list` process
+confirmed `0.4.0`; restart an already running session to load the update.
+Later-release `autoUpdate` and the shared claude.ai, Desktop, and mobile
+install record remain unverified.
+
 ## Try this first
 
 After install, use the Free research workflow at

@@ -39,6 +39,20 @@ The Claude package includes the connector, the `senior-analyst` skill, and six
 `/slatemark:*` workflow commands for Claude Code. See
 [`plugin/README.md`](plugin/README.md).
 
+**Update an existing Claude Code install:**
+
+```text
+claude plugin marketplace update slatemark-plugin
+claude plugin update slatemark@slatemark-plugin
+claude plugin list
+```
+
+A local Claude Code `2.1.178` check on 2026-09-28 moved the installed plugin
+from `0.3.0` to `0.4.0` through this manual path. A fresh `plugin list` process
+confirmed the new version; restart an already running session to use it. This
+check leaves later-release `autoUpdate` and the shared claude.ai, Desktop,
+and mobile install record unverified.
+
 ## Install for Codex
 
 ```text
@@ -50,6 +64,20 @@ Start a new Codex task after installation and authenticate when prompted. The
 native package includes the connector, the `senior-analyst` skill, and six
 focused workflow skills. See
 [`plugins/slatemark/README.md`](plugins/slatemark/README.md).
+
+**Refresh an existing Codex install:**
+
+```text
+codex plugin marketplace upgrade slatemark-codex-plugin
+codex plugin add slatemark@slatemark-codex-plugin
+codex plugin list
+```
+
+On 2026-09-28, a local Codex CLI `0.158.0-alpha.2.1` check found no newer
+marketplace root; `plugin add` resolved the published `0.2.0` package, and a
+fresh list showed it enabled. This same-version readback does not verify a
+later release upgrade or an authenticated Slatemark workflow. Start a new
+Codex task to load a refreshed package.
 
 Neither git install registers a ChatGPT app. The OpenAI Developer Platform
 submission is pending review; ChatGPT availability still requires approval and
