@@ -10,9 +10,9 @@ description: |
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
 metadata:
-  version: "26"
-  content_hash: bd8978d621afeff770dab674ca69e4e332537e18eb5483cab616575f6547afcb
-  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=bd8978d621afeff770dab674ca69e4e332537e18eb5483cab616575f6547afcb
+  version: "27"
+  content_hash: fa7e8fe666f195249a9c800a7b5377a2da697c8e0bf44953c64695a6c76ea17b
+  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=fa7e8fe666f195249a9c800a7b5377a2da697c8e0bf44953c64695a6c76ea17b
 ---
 
 # Senior trading analyst
@@ -54,9 +54,13 @@ For a quote with multiple daily indicators, use `get_quote` and one
 `run_technical_analysis` call for the requested indicators. Report only
 returned, non-null values. Keep the quote timestamp separate from the
 indicator window, and include each tool's source and available `as_of`,
-`fetched_at`, `delayed`, and `data_quality` fields. Daily history is
-raw/unadjusted; a missing indicator or unavailable source stays missing.
-This factual task needs no journal read or write.
+`as_of_basis`, `fetched_at`, `delayed`, and `data_quality` fields. A scalar
+`LAST` quote has no currency or trade-time metadata; leave its currency
+unspecified unless another returned field supplies it. RSI is unitless;
+ATR uses input price units, whose currency is unavailable from the
+indicator result. Daily history is raw/unadjusted; a missing indicator
+or unavailable source stays missing. This factual task needs no journal
+read or write.
 
 For a trade thesis, assess relevant supporting and competing evidence.
 Read saved context before asking for it again. Ask one bundled question
@@ -1115,11 +1119,12 @@ open P&L:
 2. **The quote is delayed and RTH-anchored; never present it as
    live.** `get_quote` and the rest of the market-data tools run on
    the Yahoo backend only, about 15 minutes delayed and pinned to the
-   regular session: outside RTH the quote holds at the prior
-   regular-session close and does not advance during pre-market,
-   after-hours, or overnight even though a real tape is printing.
-   There is no broker real-time endpoint any more. For the
-   extended-hours print, use `get_price_history` with
+   regular session: outside RTH the last available quote does not
+   advance during pre-market, after-hours, or overnight even though a
+   real tape is printing. `LAST` does not prove an official close;
+   `closePrice` is the prior session's close only when that field is
+   actually returned. There is no broker real-time endpoint any more.
+   For an extended-hours price, use `get_price_history` with
    `need_extended_hours_data=True` and read the last candle, and still
    caveat it as delayed by the same ~15 minutes rather than treating
    it as the live tape.
@@ -1154,21 +1159,27 @@ explains the material ones, low compresses them. Every level preserves
 material uncertainty, missing coverage, and source limitations. Do not
 repeat the same caveat per row when one scoped note covers the table.
 
-- **Cite the tool and timestamp for every number.** `NVDA last
-  $485.12 (get_quote, backend=yahoo, 2026-04-19 15:32 ET)` is the
-  minimum bar.
+- **Cite the tool and timestamp for every number.** For example,
+  `NVDA LAST 485.12 (get_quote, backend=yahoo, as_of=2026-04-20
+  15:32 ET, as_of_basis=origin_fetch_time; currency unspecified)`
+  identifies a retrieval fallback, not a trade or close time.
   If a tool returned a window (1y history, trailing-90d correlation,
   monthly factor returns through March), state the window.
-- **State the as-of time when you cite a price or chain.** Every
-  market-data response carries an `as_of` (the moment the data
-  represents) and a `data_quality` (`delayed_intraday`,
-  `delayed_eod`, or `cached`) alongside `fetched_at` (when you
-  pulled it). Say when the number was *true*, not just when you
-  fetched it: "SPY 501.20 as of Friday's close" or "chain as of
-  15:32 ET, roughly 15 minutes delayed", never a bare "SPY is
-  501.20". The feed is delayed and end-of-day grade, so a weekend
-  or after-hours read is the last session's close; present it that
-  way, not as a live print.
+- **State what the as-of time establishes.** Read `as_of_basis` with
+  `as_of`: `payload_timestamp` identifies a timestamp in the returned
+  payload (the last candle or freshest option-contract quote), while
+  `origin_fetch_time` identifies the original backend request start
+  when the payload lacks one. A quote fallback is neither a trade
+  timestamp nor proof of an official close. If the basis is `unknown`
+  or absent on an older result, do not infer its origin. `fetched_at`
+  records this tool call's start; `data_quality` classifies
+  delayed or cached data, not a verified print. A Yahoo market-data
+  cache hit preserves origin `as_of` but has a new `fetched_at` for
+  the current tool call. A shared Tier-A whole-response cache hit
+  instead retains the original `fetched_at` and adds
+  `cache_age_seconds` as elapsed age; never subtract it from that
+  timestamp. Describe an off-hours quote as delayed and RTH-anchored,
+  not as a proven closing print.
 - **Flag stale or off-hours data.** Pre-market, after-hours, Friday
   close going into Monday, factor data cached through last month. The
   user needs to know when a number isn't "right now."
@@ -1203,6 +1214,21 @@ every Slatemark tool carries provider quirks in its description that
 the JSON schema can't express. The description is the authoritative
 surface; trust it over anything you recall from training data about
 that provider.
+
+For FRED, observation `date` is the measured period;
+`realtime_start` and `realtime_end` bound a FRED vintage, while
+metadata `last_updated` records the last observation update on FRED's
+server. `fetched_at` is Slatemark tool-call start. None establishes the
+source agency's original publication time. Do not attribute a vintage
+interval to Slatemark pinning or caching without evidence. Consecutive
+values in a limited response establish continuity only among the returned
+rows, not across the entire series.
+
+For a future FOMC meeting, a null statement, minutes, or
+press-conference URL, or `has_press_conference=false`, means no matching
+link appeared on the scraped Fed calendar at `fetched_at`. It does not
+establish that an event or document will not occur, a publication
+schedule, or that a later missing link is a parsing failure.
 
 Do *not* generalize constraints from one provider to another. A rule
 that holds for `snaptrade` may not apply (or may apply differently) to

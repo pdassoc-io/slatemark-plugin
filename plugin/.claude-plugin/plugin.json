@@ -1,7 +1,7 @@
 {
   "name": "slatemark",
   "displayName": "Slatemark",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Market data and analytics for your AI. Connect a supported Claude client to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and the installed analyst skill are optional context. Slatemark supplies factual tool results; Claude creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
   "author": {
     "name": "Slatemark",
