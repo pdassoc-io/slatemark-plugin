@@ -1,6 +1,6 @@
 {
   "name": "slatemark",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Market data and analytics for your AI. Connect Codex to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and installed skills are optional context. Slatemark supplies factual tool results; Codex creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
   "author": {
     "name": "Slatemark",
