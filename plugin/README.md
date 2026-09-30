@@ -8,10 +8,10 @@ private journal and the bundled senior-analyst skill are optional context;
 Claude Code also receives workflow slash commands. Slatemark supplies factual
 tool results, and Claude creates the response.
 
-The Claude provider plugin is submitted and pending review. It has no public
-plugin listing URL, so use the Git marketplace install path below for the
-full bundle. For connector-only setup,
-open the accepted
+The Claude provider plugin was last observed pending review on 2026-09-24;
+its current review state is unverified and no public plugin listing URL has
+been recorded. Use the Git marketplace install path below for the full
+bundle. For connector-only setup, open the accepted
 [Slatemark connector listing](https://claude.ai/directory/slatemark),
 choose **Add** or **Connect**, and approve the sign-in. The connector does
 not require this plugin or the skill. The exact connector URL is not the plugin
@@ -57,9 +57,9 @@ claude plugin update slatemark@slatemark-plugin
 claude plugin list
 ```
 
-In a local Claude Code `2.1.178` check on 2026-09-28, this manual path moved
-the installed plugin from `0.3.0` to `0.4.0`. A fresh `plugin list` process
-confirmed `0.4.0`; restart an already running session to load the update.
+In a local Claude Code `2.1.178` check on 2026-09-29, this manual path moved
+the installed plugin from `0.4.1` to `0.4.2`. A fresh `plugin list` process
+confirmed `0.4.2`; restart an already running session to load the update.
 Later-release `autoUpdate` and the shared claude.ai, Desktop, and mobile
 install record remain unverified.
 
@@ -104,12 +104,12 @@ additional research and optional journal workflows.
   freshness. Brokerage connections provide Account Data, not market data.
   Option-chain snapshots are delayed, available only where listed,
   contain no Greeks, and use indicative, non-executable marks.
-- The bundled `skills/senior-analyst/SKILL.md` is **generated** from the
-  canonical templated source in the private `pdassoc-io/slatemark` repo
-  (`skills/senior-analyst/`) via `scripts/build_plugin_skill.py`
-  (rendered with defaults). Don't edit it by hand; edit the source and
-  re-run the script. A test (`tests/test_plugin_skill_in_sync.py`) fails
-  if the two drift. This Claude package is composed with the native Codex
+- The bundled `skills/senior-analyst/SKILL.md` is **generated** at publish
+  time from the canonical templated source in the private
+  `pdassoc-io/slatemark` repo (`skills/senior-analyst/`) via
+  `scripts/build_plugin_skill.py` (rendered with defaults). Don't edit it
+  by hand; a change belongs in that source and arrives with the next
+  release. This Claude package is composed with the native Codex
   package and published to the public `pdassoc-io/slatemark-plugin` repo by
   `scripts/publish_plugin_marketplace.sh`.
 
@@ -117,7 +117,8 @@ additional research and optional journal workflows.
 
 This package is specific to Claude. The same public git marketplace also
 contains a native Codex package under `plugins/slatemark/`; the OpenAI
-submission is pending review and is not an accepted directory listing. Other
+submission was in Review at its last authenticated readback, and no public
+directory listing has been verified or recorded. Other
 supported clients can connect to the hosted server at
 `https://slatemark.ai/mcp` using their own setup flow. Claude's connector
 acceptance does not confer an OpenAI listing.
