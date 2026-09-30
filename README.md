@@ -10,16 +10,17 @@ optional context. Slatemark supplies factual tool results; your AI client
 creates each response.
 
 Git marketplace availability is not a Claude or OpenAI directory listing. The
-Claude provider plugin is submitted and pending review, with no public plugin
-listing URL; Claude's published connector-only listing remains separate. The OpenAI submission
-is pending review and is not yet accepted or published in the universal
-Plugins Directory.
+Claude provider plugin was last observed pending review on 2026-09-24; its
+current review state is unverified and no public plugin listing URL has been
+recorded. Claude's published connector-only listing remains separate. The
+OpenAI submission was in Review at its last authenticated readback; no public
+Plugins Directory listing has been verified or recorded.
 
 ## Install for Claude
 
 Use the public Git marketplace for the full bundle while the Claude provider
-plugin is pending review. Do not invent a provider-plugin deep link. For connector-only setup,
-open the accepted
+plugin's publication remains unverified. Do not invent a provider-plugin deep
+link. For connector-only setup, open the accepted
 [Slatemark connector listing](https://claude.ai/directory/slatemark),
 choose **Add** or **Connect**, and approve the sign-in. The connector does
 not require this plugin or the skill.
@@ -47,9 +48,9 @@ claude plugin update slatemark@slatemark-plugin
 claude plugin list
 ```
 
-A local Claude Code `2.1.178` check on 2026-09-28 moved the installed plugin
-from `0.3.0` to `0.4.0` through this manual path. A fresh `plugin list` process
-confirmed the new version; restart an already running session to use it. This
+A local Claude Code `2.1.178` check on 2026-09-29 moved the installed plugin
+from `0.4.1` to `0.4.2` through this manual path. A fresh `plugin list` process
+confirmed `0.4.2`; restart an already running session to use it. This
 check leaves later-release `autoUpdate` and the shared claude.ai, Desktop,
 and mobile install record unverified.
 
@@ -73,15 +74,15 @@ codex plugin add slatemark@slatemark-codex-plugin
 codex plugin list
 ```
 
-On 2026-09-28, a local Codex CLI `0.158.0-alpha.2.1` check found no newer
-marketplace root; `plugin add` resolved the published `0.2.0` package, and a
-fresh list showed it enabled. This same-version readback does not verify a
-later release upgrade or an authenticated Slatemark workflow. Start a new
-Codex task to load a refreshed package.
+On 2026-09-29, a local Codex CLI `0.158.0-alpha.2.1` marketplace upgrade and
+plugin add installed the published `0.2.1` package. A fresh list showed it
+enabled. This manual update does not verify a later automatic update or an
+authenticated Slatemark workflow. Start a new Codex task to load a refreshed
+package.
 
 Neither git install registers a ChatGPT app. The OpenAI Developer Platform
-submission is pending review; ChatGPT availability still requires approval and
-publication.
+submission was in Review at its last authenticated readback; no public
+ChatGPT listing has been verified or recorded.
 
 ## Connection and plans
 
@@ -127,5 +128,6 @@ distributed here.
 
 > Maintainers: this repository is **generated** from the private
 > `pdassoc-io/slatemark` sources under `marketplace/` and
-> `codex-marketplace/`. Do not hand-edit it; edit the sources and run
-> `scripts/publish_plugin_marketplace.sh`.
+> `codex-marketplace/`, with the bundled skills rendered at publish time
+> from `skills/senior-analyst/` and the Claude commands. Do not hand-edit
+> it; edit the sources and run `scripts/publish_plugin_marketplace.sh`.
