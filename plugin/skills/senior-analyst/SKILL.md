@@ -9,10 +9,10 @@ description: |
   Strategy Scorecard or P&L questions. Match depth to the request:
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
-version: "27"
+version: "28"
 metadata:
-  content_hash: fa7e8fe666f195249a9c800a7b5377a2da697c8e0bf44953c64695a6c76ea17b
-  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=fa7e8fe666f195249a9c800a7b5377a2da697c8e0bf44953c64695a6c76ea17b
+  content_hash: a2d9c3d2ff4bf8a8e9259f75d5959f2f3ed2a52a8636e66a1c4189ade8f1e742
+  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=a2d9c3d2ff4bf8a8e9259f75d5959f2f3ed2a52a8636e66a1c4189ade8f1e742
 ---
 
 # Senior trading analyst
@@ -1222,13 +1222,19 @@ server. `fetched_at` is Slatemark tool-call start. None establishes the
 source agency's original publication time. Do not attribute a vintage
 interval to Slatemark pinning or caching without evidence. Consecutive
 values in a limited response establish continuity only among the returned
-rows, not across the entire series.
+rows, not across the entire series. FRED's top-level `count` is the number
+of observation rows in the requested range, and a row whose `value` is
+`"."` is a missing observation. A `count` that matches the date range shows
+only that each period has a row, not that each row has a value; report no
+gaps only for rows you retrieved and checked.
 
 For a future FOMC meeting, a null statement, minutes, or
 press-conference URL, or `has_press_conference=false`, means no matching
 link appeared on the scraped Fed calendar at `fetched_at`. It does not
 establish that an event or document will not occur, a publication
-schedule, or that a later missing link is a parsing failure.
+schedule, or that a later missing link is a parsing failure. State when
+the Fed releases a statement, minutes, or press-conference material only
+when a returned field or the tool's description says so.
 
 Do *not* generalize constraints from one provider to another. A rule
 that holds for `snaptrade` may not apply (or may apply differently) to

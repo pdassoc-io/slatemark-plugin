@@ -1,0 +1,25 @@
+Slatemark plugin for Codex
+
+Copyright (c) 2026 PD & Associates. All rights reserved.
+
+This package is published solely for use with the hosted Slatemark service
+at https://slatemark.ai. It is not open-source software and is not released
+under an open-source or general redistribution license.
+
+Subject to your compliance with the Slatemark Terms of Service
+(https://slatemark.ai/terms), you are granted a limited, non-exclusive,
+non-transferable right to download, install, and privately modify this
+package solely to access and use the hosted Slatemark service. You may not
+distribute, sublicense, publicly display, or resell this package or any
+modifications you make to it.
+
+Pursuant to the GitHub Terms of Service, users may view and fork this
+repository within GitHub. Authorized plugin directories (including the
+OpenAI Plugins Directory) are permitted to index, copy, and distribute
+this package to facilitate end-user installation.
+
+DISCLAIMER: THIS PACKAGE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED. SLATEMARK AND PD & ASSOCIATES DISCLAIM ALL LIABILITY
+ARISING FROM YOUR USE OF THIS PACKAGE. THIS PACKAGE AND THE SLATEMARK
+SERVICE DO NOT PROVIDE INVESTMENT ADVICE, FINANCIAL ADVICE, OR TRADING
+SIGNALS.

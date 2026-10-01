@@ -122,3 +122,11 @@ directory listing has been verified or recorded. Other
 supported clients can connect to the hosted server at
 `https://slatemark.ai/mcp` using their own setup flow. Claude's connector
 acceptance does not confer an OpenAI listing.
+
+## License / use
+
+© 2026 PD & Associates. This package is published solely for use with the
+hosted Slatemark service. It is not open-source software. You may download,
+install, and privately modify this package to connect to your Slatemark
+account, but you may not redistribute it. See the LICENSE file for full usage
+rights and disclaimers.

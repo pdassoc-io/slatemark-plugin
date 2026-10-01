@@ -68,6 +68,10 @@ app ID or `.app.json` mapping in this tree. The #202
 combined-service gate is complete; the package must continue to preserve the
 reviewed read-only, no-embedded-inference product shape.
 
-© Slatemark. The bundled methodology and workflow skills are provided for use
-with the hosted Slatemark service and are not released under an open-source
-redistribution license. The Slatemark server code is not distributed here.
+## License / use
+
+© 2026 PD & Associates. This package is published solely for use with the
+hosted Slatemark service. It is not open-source software. You may download,
+install, and privately modify this package to connect to your Slatemark
+account, but you may not redistribute it. See the LICENSE file for full usage
+rights and disclaimers.
