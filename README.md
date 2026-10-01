@@ -121,10 +121,10 @@ Greeks, and use indicative, non-executable marks.
 
 ## License / use
 
-© Slatemark. These plugins are published for use with the hosted Slatemark
-service. The bundled methodology and workflow content is not released under
-an open-source redistribution license. The Slatemark server code is not
-distributed here.
+© 2026 PD & Associates. These plugins are published for use with the hosted
+Slatemark service. The bundled methodology and workflow content is not
+released under an open-source redistribution license. The Slatemark server
+code is not distributed here.
 
 > Maintainers: this repository is **generated** from the private
 > `pdassoc-io/slatemark` sources under `marketplace/` and
