@@ -121,7 +121,7 @@ Greeks, and use indicative, non-executable marks.
 
 ## License / use
 
-© 2026 PD & Associates. These plugins are published for use with the hosted
+© 2026 PD&A LLC. These plugins are published for use with the hosted
 Slatemark service. The bundled methodology and workflow content is not
 released under an open-source redistribution license. The Slatemark server
 code is not distributed here.

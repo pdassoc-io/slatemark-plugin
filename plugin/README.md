@@ -120,7 +120,7 @@ their own setup flow.
 
 ## License / use
 
-© 2026 PD & Associates. This package is published solely for use with the
+© 2026 PD&A LLC. This package is published solely for use with the
 hosted Slatemark service. It is not open-source software. You may download,
 install, and privately modify this package to connect to your Slatemark
 account, but you may not redistribute it. See the LICENSE file for full usage
