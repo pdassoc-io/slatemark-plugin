@@ -1,14 +1,17 @@
 {
   "name": "slatemark",
   "displayName": "Slatemark",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Market data and analytics for your AI. Connect a supported Claude client to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and the installed analyst skill are optional context. Slatemark supplies factual tool results; Claude creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
   "author": {
-    "name": "Slatemark",
+    "name": "Slatemark (PD & Associates)",
     "url": "https://slatemark.ai"
   },
   "homepage": "https://slatemark.ai",
   "repository": "https://github.com/pdassoc-io/slatemark-plugin",
+  "icon": "./assets/slatemark-mark.svg",
+  "privacyPolicyUrl": "https://slatemark.ai/privacy",
+  "termsOfServiceUrl": "https://slatemark.ai/terms",
   "keywords": ["trading", "research", "market-data", "journal", "finance"],
   "mcpServers": {
     "slatemark": {

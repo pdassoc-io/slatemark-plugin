@@ -10,16 +10,16 @@ optional context. Slatemark supplies factual tool results; your AI client
 creates each response.
 
 Git marketplace availability is not a Claude or OpenAI directory listing. The
-Claude provider plugin was last observed pending review on 2026-09-24; its
-current review state is unverified and no public plugin listing URL has been
-recorded. Claude's published connector-only listing remains separate. The
+Claude provider plugin is not listed: at the 2026-10-01 developer-portal
+readback its submission needed changes, and no public plugin listing URL has
+been recorded. Claude's published connector-only listing remains separate. The
 OpenAI submission was in Review at its last authenticated readback; no public
 Plugins Directory listing has been verified or recorded.
 
 ## Install for Claude
 
 Use the public Git marketplace for the full bundle while the Claude provider
-plugin's publication remains unverified. Do not invent a provider-plugin deep
+plugin is not listed. Do not invent a provider-plugin deep
 link. For connector-only setup, open the accepted
 [Slatemark connector listing](https://claude.ai/directory/slatemark),
 choose **Add** or **Connect**, and approve the sign-in. The connector does
