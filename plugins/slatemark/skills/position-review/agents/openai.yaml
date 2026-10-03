@@ -1,6 +1,6 @@
 interface:
   display_name: "Position Review"
-  short_description: "Re-underwrite a position you hold"
+  short_description: "Review a held position against its thesis"
   default_prompt: "Use $position-review to review my AAPL position."
 dependencies:
   tools:

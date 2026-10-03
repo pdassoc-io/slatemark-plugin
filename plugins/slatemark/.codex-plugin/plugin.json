@@ -1,7 +1,7 @@
 {
   "name": "slatemark",
-  "version": "0.2.3",
-  "description": "Market data and analytics for your AI. Connect Codex to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and installed skills are optional context. Slatemark supplies factual tool results; Codex creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
+  "version": "1.1.0",
+  "description": "Market data and analytics for your AI. Connect a supported AI client to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and installed skills are optional context. Slatemark supplies factual tool results; your AI client creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
   "author": {
     "name": "Slatemark",
     "email": "support@slatemark.ai",
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "Slatemark",
     "shortDescription": "Market research. In your AI.",
-    "longDescription": "Connect Codex to delayed market data, technical calculations, SEC filings, and macroeconomic research. Slatemark supplies factual tool results with available source and timing information; Codex creates the response. Your private journal and user-installed skills are optional context. Available tools depend on your plan and configuration. Brokerage access is read-only; user-directed journal writes change only your Slatemark records. Informational only, not personalized investment advice. A Slatemark account is required.",
+    "longDescription": "Connect a supported AI client to market data, technical calculations, SEC filings, and macroeconomic research. Tool results identify their source and available freshness information. Add your private journal and framework rules as optional context. Available tools depend on your plan, configured data access, client support, credentials, and runtime availability. Brokerage access is read-only; user-directed journal writes change only your Slatemark records. Slatemark supplies factual tool outputs, optional user-installed skills supply methodology, and your external AI client creates the response. Informational only, not personalized investment advice. A Slatemark account is required.",
     "developerName": "Slatemark",
     "category": "Finance",
     "capabilities": [
@@ -31,14 +31,80 @@
       "Write"
     ],
     "websiteURL": "https://slatemark.ai",
+    "supportURL": "https://slatemark.ai/",
     "privacyPolicyURL": "https://slatemark.ai/privacy",
     "termsOfServiceURL": "https://slatemark.ai/terms",
     "defaultPrompt": [
       "Show AAPL's latest available quote and non-null daily RSI(14)/ATR(14). Keep timestamps separate; include sources."
     ],
-    "brandColor": "#93d8c4",
+    "brandColor": "#246452",
+    "brandColorDark": "#93d8c4",
     "composerIcon": "./assets/slatemark-mark.svg",
     "logo": "./assets/slatemark-mark.svg",
     "screenshots": []
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Retrieve AAPL's latest available quote with provenance.",
+              "prompt": "Using Slatemark, show AAPL's latest available LAST quote. Include its source and available as_of, fetched_at, and data_quality fields, and explain the approximate source delay.",
+              "tools_triggered": "get_quote",
+              "expected_behavior": "Returns AAPL's LAST value with source and available freshness fields, labels it as delayed and indicative, or explains a missing value."
+            },
+            {
+              "description": "Compute daily RSI and ATR from one AAPL history fetch.",
+              "prompt": "Using Slatemark, calculate AAPL's daily RSI(14) and ATR(14) with run_technical_analysis. Show the latest non-null values, their dates, the source and available freshness fields, and the input window. State if either value is unavailable.",
+              "tools_triggered": "run_technical_analysis",
+              "expected_behavior": "Returns daily RSI(14) and ATR(14) from one fetched history, with source, available freshness and input-window fields, and any missing or warm-up values stated plainly."
+            },
+            {
+              "description": "Retrieve the next central-bank meeting.",
+              "prompt": "Using Slatemark, return the next scheduled or in-progress FOMC meeting and say whether it is currently in progress.",
+              "tools_triggered": "get_next_fomc_meeting",
+              "expected_behavior": "Returns the next meeting dates, status flags, source, and fetched timestamp without predicting a policy decision."
+            },
+            {
+              "description": "Run an impersonal cross-asset regime read.",
+              "prompt": "Using Slatemark, give me the current cross-asset regime snapshot for the curve, dollar, credit, volatility, and correlations.",
+              "tools_triggered": "analyze_market_regime",
+              "expected_behavior": "Returns factual cross-asset labels and values with source, freshness, and unavailable-symbol coverage, without a trade recommendation."
+            },
+            {
+              "description": "Create a complete private manual journal record.",
+              "prompt": "Record a planned manual journal entry with symbol MSFT, side buy, quantity 10, thesis 'Starter position while I monitor enterprise AI demand,' instrument type equity, and status planned. Do not place an order.",
+              "tools_triggered": "record_journal_entry",
+              "expected_behavior": "Creates only the signed-in user's private journal row and returns its identifier and timestamps; no brokerage order is placed."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Do not trigger for brokerage execution.",
+              "prompt": "Buy 10 shares of AAPL at market in my linked brokerage.",
+              "expected_behavior": "Slatemark is not invoked because it cannot place, modify, or cancel brokerage orders."
+            },
+            {
+              "description": "Do not accept brokerage credentials or MFA codes.",
+              "prompt": "Connect my brokerage using my username, password, and this MFA code.",
+              "expected_behavior": "Slatemark is not invoked and does not solicit the secrets; a brokerage connection is made in the signed-in Slatemark flow, outside the AI client."
+            },
+            {
+              "description": "Do not trigger for a personal calendar request.",
+              "prompt": "What meetings are on my personal calendar tomorrow?",
+              "expected_behavior": "Slatemark is not invoked because it exposes market catalysts, not the user's personal calendar."
+            }
+          ]
+        },
+        "commerce": false
+      },
+      "publication": {
+        "countries": [
+          "US"
+        ],
+        "release_notes": "Ships Slatemark as one plugin package: the hosted MCP server at https://slatemark.ai/mcp, the senior-analyst methodology skill, and six workflow skills (catalyst map, earnings setup, position review, post-mortem, pre-trade brief, and regime check). The listing now leads with market data and analytics, and the private journal stays optional context. Brokerage access remains read-only."
+      }
+    }
   }
 }

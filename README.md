@@ -80,9 +80,9 @@ enabled. This manual update does not verify a later automatic update or an
 authenticated Slatemark workflow. Start a new Codex task to load a refreshed
 package.
 
-Neither git install registers a ChatGPT app. The OpenAI Developer Platform
-submission was in Review at its last authenticated readback; no public
-ChatGPT listing has been verified or recorded.
+Neither git install is an OpenAI directory listing. Slatemark submits the
+native package to OpenAI's plugin directory separately, as a ZIP; no public
+ChatGPT or Codex listing has been verified or recorded.
 
 ## Connection and plans
 
