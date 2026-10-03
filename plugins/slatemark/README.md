@@ -2,11 +2,11 @@
 
 **Market data and analytics for your AI.**
 
-This plugin wires Codex to Slatemark: the remote MCP server for
+This plugin connects your AI client to Slatemark: the remote MCP server for
 delayed market data, technical calculations, SEC filings, and macroeconomic
 research, plus bundled analyst and workflow skills. Your private journal and
 framework rules are optional context. Slatemark supplies factual tool results;
-Codex creates the response.
+your AI client creates the response.
 
 ## Start here
 
@@ -60,11 +60,10 @@ Greeks, and use indicative, non-executable marks.
 ## Distribution status
 
 This package is distributed through the public
-`pdassoc-io/slatemark-plugin` git marketplace for Codex. The OpenAI submission
-is pending review, and the package is not yet accepted or published in
-OpenAI's universal Plugins Directory. Git availability is not an OpenAI
-directory listing. It has no registered ChatGPT technical
-app ID or `.app.json` mapping in this tree. The #202
+`pdassoc-io/slatemark-plugin` git marketplace for Codex. Slatemark also
+submits it to OpenAI's plugin directory, where ChatGPT and Codex users can
+install it only after OpenAI approves it and Slatemark publishes it. Git
+availability is not an OpenAI directory listing. The #202
 combined-service gate is complete; the package must continue to preserve the
 reviewed read-only, no-embedded-inference product shape.
 
