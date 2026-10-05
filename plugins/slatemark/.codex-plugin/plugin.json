@@ -1,6 +1,6 @@
 {
   "name": "slatemark",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Market data and analytics for your AI. Connect a supported AI client to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and installed skills are optional context. Slatemark supplies factual tool results; your AI client creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
   "author": {
     "name": "Slatemark",
@@ -97,6 +97,7 @@
             }
           ]
         },
+        "demo_recording_url": "https://youtu.be/_BVQRvKHiyE",
         "commerce": false
       },
       "publication": {
