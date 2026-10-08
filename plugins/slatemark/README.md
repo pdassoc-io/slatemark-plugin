@@ -1,6 +1,6 @@
 # Slatemark OpenAI plugin
 
-**Market data and analytics for your AI.**
+**Check your risk before you take the trade.**
 
 This plugin connects your AI client to Slatemark: the remote MCP server for
 delayed market data, technical calculations, SEC filings, and macroeconomic

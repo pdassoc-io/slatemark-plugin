@@ -1,21 +1,22 @@
 # Slatemark Claude plugin
 
-**Market data and analytics for your AI.**
+**Check your risk before you take the trade.**
 
 This bundle connects supported Claude clients to Slatemark's delayed market
 data, technical calculations, SEC filings, and macroeconomic research. Your
-private journal and the bundled senior-analyst skill are optional context;
-Claude Code also receives workflow slash commands. Slatemark supplies factual
-tool results, and Claude creates the response.
+private journal and the bundled senior-analyst skill are optional context,
+and the plugin adds six workflow commands. Slatemark supplies factual tool
+results, and Claude creates the response.
 
 For connector-only setup, open the
 [Slatemark connector listing](https://claude.ai/directory/slatemark),
 choose **Add** or **Connect**, and approve the sign-in. That listing installs
-the connector only, without this plugin's skill or slash commands, and the
+the connector only, without this plugin's skill or workflow commands, and the
 connector does not require them.
 
 The plugin installs on claude.ai, in Claude Desktop, and in
-Claude Code.
+Claude Code. An install on claude.ai or in Claude Desktop is saved to your
+Claude account, so it also loads in Cowork and in Claude chat on mobile.
 
 ## Install
 
@@ -30,23 +31,28 @@ The first command registers the marketplace; the second installs the
 plugin.
 
 **Claude Desktop / claude.ai:** open **Customize → Plugins**, choose
-**Add from a repository**, paste
-`https://github.com/pdassoc-io/slatemark-plugin`, then install
-**Slatemark**.
+**Add → Add marketplace**, then **Add from a repository**, and enter
+`https://github.com/pdassoc-io/slatemark-plugin`. Then add **Slatemark**
+from that marketplace.
 
-Claude opens an OAuth sign-in in your browser to connect your Slatemark
-account at install or on first tool use. There is no token to paste.
-In Claude Code, run `/mcp` if you want to trigger or check the sign-in.
+Adding the plugin does not sign you in. On claude.ai and in Claude Desktop,
+open the plugin's **Connectors** tab, add or connect Slatemark there, and
+approve the Slatemark sign-in in your browser. In Claude Code, run any
+Slatemark tool or `/mcp` and approve the sign-in. There is no token to paste.
 
 A Slatemark account is required. Free includes one constrained
 AI-client connection. Plus adds current brokerage Account Data,
 available booked-activity and backfill import, periodic reconciliation, FINRA,
 additional active AI-client connections, and higher fair-use limits.
 
-## Update in Claude Code
+## Update
 
-For an existing Git marketplace install, refresh the marketplace and then the
-plugin:
+**Claude Desktop / claude.ai:** open **Customize → Plugins** and select
+**Check for updates** on the marketplace you added. You can also turn on
+**Sync automatically** for it.
+
+**Claude Code:** for an existing Git marketplace install, refresh the
+marketplace and then the plugin:
 
 ```text
 claude plugin marketplace update slatemark-plugin
@@ -79,7 +85,10 @@ additional research and optional journal workflows.
 - **`senior-analyst` skill**: bundled visible methodology Claude can
   use with the tools. Factual lookups do not need a session-status or journal
   read; broader reviews use saved context only when relevant.
-- **Workflow slash commands** (Claude Code):
+- **Workflow commands**: in Claude Code and Cowork, type one to run it. In
+  Claude chat on the web, desktop, or mobile, each loads as a skill that
+  Claude can apply when your request fits, and the `/` menu lists it with
+  the skills.
   - `/slatemark:catalyst-map [ticker] [horizon]`
   - `/slatemark:regime-check`
   - `/slatemark:pre-trade-brief [ticker] [horizon]`

@@ -10,9 +10,9 @@ description: |
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
 metadata:
-  version: "28"
-  content_hash: a2d9c3d2ff4bf8a8e9259f75d5959f2f3ed2a52a8636e66a1c4189ade8f1e742
-  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=a2d9c3d2ff4bf8a8e9259f75d5959f2f3ed2a52a8636e66a1c4189ade8f1e742
+  version: "29"
+  content_hash: afa2aab036f432ef6cf9fbae29a14f377c61d8df9197e51acd70c6b26952bfa7
+  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=afa2aab036f432ef6cf9fbae29a14f377c61d8df9197e51acd70c6b26952bfa7
 ---
 
 # Senior trading analyst
@@ -373,7 +373,7 @@ Three semantics to carry into the answer:
 
 - `get_weekly_slate` is a **live recompute**, never a read-back of
   a sent email. Where the Weekly Slate email is enabled, journal
-  edits, tag changes, or newly reconciled fills since the Monday
+  edits, tag changes, or newly reconciled fills since the Sunday
   send can make this read differ from any emailed copy the user
   quotes; when your read disagrees with the copy in front of them,
   say so plainly rather than papering over it.
@@ -773,7 +773,7 @@ book context only when they affect that review.
 | Question shape | Dimensions to analyze |
 |---|---|
 | *"How is my portfolio doing?"* | holdings and current values, including the option rows already valued in `get_snaptrade_book_snapshot`; for session/day performance, equity changes from `get_quotes` and each held option contract priced separately through `get_option_chain`, with coverage and both feeds' as-of times stated; for a longer window, disclose that the current tool surface has no historical option-price series rather than silently dropping those legs; per-position returns and volatility; concentration and correlation structure; drawdown and benchmark comparison; factor exposure of the book; upcoming catalysts across holdings; **trade-pattern audit via `analyze_journal_patterns`**: win-rate and R-multiple skew across position class, lifecycle, day-of-week of entry, catalyst presence, and stop presence (populates as trades close with structured exit data) |
-| *"What's the macro setup right now?"* | upcoming high-impact data releases; next FOMC meeting and recent Fed commentary; yield curve level and shape; recent Treasury auction demand and TGA cash; equity / bond / FX / commodity regime |
+| *"What's the macro setup right now?"* | upcoming high-impact data releases; next FOMC meeting and recent Fed commentary; yield curve level and shape; recent Treasury auction demand and TGA cash; equity / bond / FX / commodity regime; the cross-asset panel returned by `analyze_market_data_cross_asset_panel`, with its `panel_source` stated, including the fed funds futures implied path per FOMC meeting when the panel carries it |
 | *"Explain this move in X."* | price and volume around the move; filings in the window; headlines and sentiment in the window; sector and factor returns same window; macro releases that day; peer and correlated-asset moves |
 | *"Is X overvalued / undervalued?"* | fundamentals from filings (XBRL facts, recent reports); valuation ratios vs. history and vs. peers/industry; price trend and relative strength; factor / style exposure |
 | *"How does [my planned trade] look for tomorrow / right now?"* / *"Is this trade still good?"* | refresh current price vs where the trade was sized; **level-grounded TA against the specific entry / stop / target / option strikes in play** (see *Reaching for technical analysis* for the dimensions); option-chain refresh if options are involved; news and catalysts that have landed since the trade was designed; existing book exposure if the trade compounds it |
@@ -802,7 +802,9 @@ compose only the parts needed by the request.
 - **Post-Mortem**: compare recorded intent with the outcome and preserve
   the user's explanation. Follow the fill matrix; a lesson is tentative
   when the sample cannot distinguish process from chance.
-- **Regime Check**: the cross-asset backdrop when it bears on the question.
+- **Regime Check**: the cross-asset backdrop, from Slatemark's composite and
+  the panel returned by `analyze_market_data_cross_asset_panel`, with its
+  `panel_source` stated, when it bears on the question.
 - **Position Review**: current evidence against the user's recorded
   thesis and framework, with holding and journal coverage kept distinct.
 - **Catalyst Map**: sourced, dated events in the requested window, keeping
