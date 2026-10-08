@@ -1,6 +1,6 @@
 # Slatemark plugin marketplace
 
-**Market data and analytics for your AI.**
+**Check your risk before you take the trade.**
 
 This public repository distributes Slatemark packages for supported Claude and
 Codex clients. Both connect to the same OAuth-protected Slatemark MCP server
@@ -33,12 +33,19 @@ not require this plugin or the skill.
 ```
 
 **Claude Desktop / claude.ai:** open **Customize → Plugins**, choose
-**Add from a repository**, paste
-`https://github.com/pdassoc-io/slatemark-plugin`, then install **Slatemark**.
+**Add → Add marketplace**, then **Add from a repository**, and enter
+`https://github.com/pdassoc-io/slatemark-plugin`. Then add **Slatemark** from
+that marketplace. Adding the plugin does not sign you in: open its
+**Connectors** tab, add or connect Slatemark there, and approve the sign-in.
 
 The Claude package includes the connector, the `senior-analyst` skill, and six
-`/slatemark:*` workflow commands for Claude Code. See
+workflow commands. Claude Code and Cowork run them as typed `/slatemark:*`
+commands; in Claude chat each loads as a skill. See
 [`plugin/README.md`](plugin/README.md).
+
+**Update an existing Claude Desktop / claude.ai install:** open
+**Customize → Plugins** and select **Check for updates** on the marketplace
+you added. You can also turn on **Sync automatically** for it.
 
 **Update an existing Claude Code install:**
 
