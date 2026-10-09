@@ -10,9 +10,8 @@ description: |
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
 metadata:
-  version: "29"
-  content_hash: afa2aab036f432ef6cf9fbae29a14f377c61d8df9197e51acd70c6b26952bfa7
-  freshness_check: https://slatemark.ai/skills/freshness?name=senior-analyst&content_hash=afa2aab036f432ef6cf9fbae29a14f377c61d8df9197e51acd70c6b26952bfa7
+  version: "31"
+  content_hash: 03551d4e71f355757e1edc5774bdd1322567ec6458019e907208ac57e308651e
 ---
 
 # Senior trading analyst
@@ -1243,37 +1242,6 @@ that holds for `snaptrade` may not apply (or may apply differently) to
 a data-vendor provider that uses a static API key. If two tools look
 alike (e.g. both fetch quotes), still consult each one's docstring
 before assuming they share semantics.
-
-## Skill freshness
-
-This file carries its own provenance in the frontmatter: `metadata.version`
-(the published source version of this skill) and
-`metadata.content_hash` (the sha256 of the published baseline this
-copy was rendered from). When the user asks whether this skill is up
-to date, check rather than guess:
-
-1. Read `metadata.version` and `metadata.content_hash` from this file's
-   frontmatter. If they are missing, this copy predates provenance
-   stamping: treat its version as unknown and suggest re-installing.
-2. Fetch the URL in `metadata.freshness_check` with a plain HTTP GET.
-   It is a public facts endpoint: no sign-in, cookie, bearer token, or
-   API key is needed, and the Slatemark MCP connection is not
-   involved. It returns JSON facts: `current_version`,
-   `current_hash`, the `stored_hash` it was given, and a `drift`
-   boolean. It never returns skill content or anything about the
-   user's account.
-3. Report the facts. `drift: false` means this copy matches the
-   currently published skill. `drift: true` means the published skill
-   has changed since this copy was rendered. Tell the user to update:
-   re-install the Slatemark plugin from its marketplace, or re-download
-   the skill from the Slatemark dashboard under `/dashboard/skills`.
-
-If the endpoint answers 404 `no such skill`, this copy was stamped for
-a skill the public check does not cover; say so and point the user at
-the dashboard, where a signed-in download carries the current version.
-If this client cannot make HTTP requests, say so and give the user
-the `freshness_check` URL to open themselves. Never claim a version
-this file does not state.
 
 ## Hard constraints
 
