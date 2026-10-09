@@ -33,7 +33,7 @@ Each workflow uses only the data available on the user's plan, names any
 unavailable section, and continues with the evidence it can retrieve. The
 broader `$senior-analyst` skill provides optional methodology alongside these
 focused workflows. Its generated frontmatter carries the published skill
-version, content hash, and freshness-check URL.
+version and content hash.
 
 ## Connection and plans
 
@@ -47,10 +47,11 @@ FINRA, additional active AI-client connections, and a higher fair-use limit.
 ## Boundaries
 
 Brokerage, order, trading, and funds access is read-only. Slatemark never
-places, modifies, or cancels an order; every trading decision is yours. The
-journal can write only user-authored records to your Slatemark store. Nothing
-here is personalized investment advice, and Slatemark is not a registered
-investment adviser, broker-dealer, or fiduciary.
+places, modifies, or cancels an order; every trading decision is yours.
+User-directed journal writes change only your Slatemark records; the Plus
+booked-activity imports described above add brokerage activity to your trade
+journal. Nothing here is personalized investment advice, and Slatemark is not
+a registered investment adviser, broker-dealer, or fiduciary.
 
 Market data is approximately 15 minutes delayed and labeled with its
 freshness. Brokerage connections provide Account Data, not market data.

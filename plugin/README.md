@@ -106,13 +106,6 @@ additional research and optional journal workflows.
   freshness. Brokerage connections provide Account Data, not market data.
   Option-chain snapshots are delayed, available only where listed,
   contain no Greeks, and use indicative, non-executable marks.
-- **Skill version check.** If you ask whether the bundled skill is up to
-  date, the skill tells Claude to send a plain HTTP GET to a public
-  Slatemark endpoint, `https://slatemark.ai/skills/freshness`, carrying only
-  the skill name and its published content hash. The request needs no
-  sign-in and does not use the MCP connection. The response contains only
-  version facts. If Claude cannot make HTTP requests, it gives you the URL
-  to open yourself.
 - The bundled `skills/senior-analyst/SKILL.md` is generated for each
   release from Slatemark's maintained source, so its changes arrive with
   plugin updates.
