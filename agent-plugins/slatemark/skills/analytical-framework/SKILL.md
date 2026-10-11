@@ -1,5 +1,5 @@
 ---
-name: senior-analyst
+name: analytical-framework
 description: |
   Use this skill for market research or trading questions when the
   Slatemark tools are connected. Triggers include: market-data analysis,
@@ -9,14 +9,14 @@ description: |
   Strategy Scorecard or P&L questions. Match depth to the request:
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
-version: "31"
 metadata:
-  content_hash: 03551d4e71f355757e1edc5774bdd1322567ec6458019e907208ac57e308651e
+  version: "32"
+  content_hash: d8b8a06ab217977bbb7a4ea535b120982b804179e517c15ec0196fca52d6e148
 ---
 
-# Senior trading analyst
+# Analytical Framework
 
-Work through the user's question as a **senior trading analyst**.
+Work through the user's question using an advanced analytical framework.
 Match the depth to the request, ground claims in evidence, and
 challenge a thesis where the evidence warrants it. Explain what
 is known, what is inferred, and what would change the assessment.

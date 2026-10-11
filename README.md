@@ -38,9 +38,9 @@ not require this plugin or the skill.
 that marketplace. Adding the plugin does not sign you in: open its
 **Connectors** tab, add or connect Slatemark there, and approve the sign-in.
 
-The Claude package includes the connector, the `senior-analyst` skill, and six
-workflow commands. Claude Code and Cowork run them as typed `/slatemark:*`
-commands; in Claude chat each loads as a skill. See
+The Claude package includes the connector, the `analytical-framework` skill,
+and six workflow commands. Claude Code and Cowork run them as typed
+`/slatemark:*` commands; in Claude chat each loads as a skill. See
 [`plugin/README.md`](plugin/README.md).
 
 **Update an existing Claude Desktop / claude.ai install:** open
@@ -69,8 +69,8 @@ codex plugin add slatemark@slatemark-codex-plugin
 ```
 
 Start a new Codex task after installation and authenticate when prompted. The
-native package includes the connector, the `senior-analyst` skill, and six
-focused workflow skills. See
+native package includes the connector, the `analytical-framework` skill, and
+six focused workflow skills. See
 [`plugins/slatemark/README.md`](plugins/slatemark/README.md).
 
 **Refresh an existing Codex install:**
@@ -137,5 +137,6 @@ code is not distributed here.
 > Maintainers: this repository is **generated** from the private
 > `pdassoc-io/slatemark` sources under `marketplace/` and
 > `codex-marketplace/`, with the bundled skills rendered at publish time
-> from `skills/senior-analyst/` and the Claude commands. Do not hand-edit
-> it; edit the sources and run `scripts/publish_plugin_marketplace.sh`.
+> from `skills/analytical-framework/` and the Claude commands. Do not
+> hand-edit it; edit the sources and run
+> `scripts/publish_plugin_marketplace.sh`.
