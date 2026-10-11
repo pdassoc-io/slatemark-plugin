@@ -4,9 +4,9 @@
 
 This bundle connects supported Claude clients to Slatemark's delayed market
 data, technical calculations, SEC filings, and macroeconomic research. Your
-private journal and the bundled senior-analyst skill are optional context,
-and the plugin adds six workflow commands. Slatemark supplies factual tool
-results, and Claude creates the response.
+private journal and the bundled analytical-framework skill are optional
+context, and the plugin adds six workflow commands. Slatemark supplies factual
+tool results, and Claude creates the response.
 
 For connector-only setup, open the
 [Slatemark connector listing](https://claude.ai/directory/slatemark),
@@ -82,7 +82,7 @@ additional research and optional journal workflows.
 - **Remote MCP connector** (`https://slatemark.ai/mcp`, OAuth): the same
   hosted server as every other supported client, with factual research tools
   available on your plan and your optional private journal.
-- **`senior-analyst` skill**: bundled visible methodology Claude can
+- **`analytical-framework` skill**: bundled visible methodology Claude can
   use with the tools. Factual lookups do not need a session-status or journal
   read; broader reviews use saved context only when relevant.
 - **Workflow commands**: in Claude Code and Cowork, type one to run it. In
@@ -106,7 +106,7 @@ additional research and optional journal workflows.
   freshness. Brokerage connections provide Account Data, not market data.
   Option-chain snapshots are delayed, available only where listed,
   contain no Greeks, and use indicative, non-executable marks.
-- The bundled `skills/senior-analyst/SKILL.md` is generated for each
+- The bundled `skills/analytical-framework/SKILL.md` is generated for each
   release from Slatemark's maintained source, so its changes arrive with
   plugin updates.
 - Slatemark's [Privacy Policy](https://slatemark.ai/privacy) and

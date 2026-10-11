@@ -1,6 +1,6 @@
 {
   "name": "slatemark",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Check your risk before you take the trade. Connect a supported AI client to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and installed skills are optional context. Slatemark supplies factual tool results; your AI client creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
   "author": {
     "name": "Slatemark",
@@ -104,7 +104,7 @@
         "countries": [
           "US"
         ],
-        "release_notes": "Ships Slatemark as one plugin package: the hosted MCP server at https://slatemark.ai/mcp, the senior-analyst methodology skill, and six workflow skills (catalyst map, earnings setup, position review, post-mortem, pre-trade brief, and regime check). The description now leads with \"Check your risk before you take the trade.\" The private journal stays optional context, and brokerage access remains read-only."
+        "release_notes": "Renames the bundled methodology skill to analytical-framework, shown as Analytical Framework. Call it as $analytical-framework, and update any saved prompt that names the skill. The package still ships the hosted MCP server at https://slatemark.ai/mcp and six workflow skills (catalyst map, earnings setup, position review, post-mortem, pre-trade brief, and regime check). The private journal stays optional context, and brokerage access remains read-only."
       }
     }
   }

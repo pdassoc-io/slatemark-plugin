@@ -31,8 +31,8 @@ missing. For other research or recorded-trade tasks, use a focused skill:
 
 Each workflow uses only the data available on the user's plan, names any
 unavailable section, and continues with the evidence it can retrieve. The
-broader `$senior-analyst` skill provides optional methodology alongside these
-focused workflows. Its generated frontmatter carries the published skill
+broader `$analytical-framework` skill provides optional methodology alongside
+these focused workflows. Its generated frontmatter carries the published skill
 version and content hash.
 
 ## Connection and plans
