@@ -10,8 +10,8 @@ description: |
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
 metadata:
-  version: "32"
-  content_hash: d8b8a06ab217977bbb7a4ea535b120982b804179e517c15ec0196fca52d6e148
+  version: "34"
+  content_hash: 15b0e65fc63c9676aec14f7efa9bebe21b4e06174144db61040e0eae7f71cfd1
 ---
 
 # Analytical Framework
@@ -260,10 +260,12 @@ present, but `thesis` is truncated to a ~200-character preview and
 total-line count). `_has_full_text: true` on a row means content was
 elided. **Do not** re-call `list_journal_entries` with
 `view="full"` to read one entry's body. That fans the bloat across
-every row. Pull the specific entry with
-`get_journal_entry(entry_id)` (full thesis, notes in `notes_tail.tail`,
-still tail-truncated by default; pass `notes_tail_lines=None` for the
-full notes log). For position-review questions on a single
+every row. Pull the entries you need by ID with
+`get_journal_entries(entry_ids)` (full thesis, notes in
+`notes_tail.tail`, still tail-truncated by default; pass
+`notes_tail_lines=None` for the full notes log of every entry in the
+call). One call takes up to 50 IDs; pass a one-item list when you need
+only one entry. For position-review questions on a single
 symbol, `get_position_context(symbol)` is even better. It bundles
 the open entries (summary by default), the rules they reference
 (compact rule summaries with name, version, parameters, and content
@@ -992,10 +994,14 @@ This is different from analyzing a chain or evaluating a structure. A
 book read needs the value and session change of the exact contract the
 user holds. Start with `get_snaptrade_book_snapshot`: its option rows
 are already included in current market value at the brokerage's last
-synced mark. Use the contract label there, or the raw `option_symbol`
-from the matching account's `get_snaptrade_positions` response when
-the label is incomplete, to identify the underlying, call/put, strike,
-expiration, signed contract count, and average purchase price.
+synced mark. Use the contract label there, or the `instrument` block of
+the matching row in that account's `get_snaptrade_positions`
+`option_positions` when the label is incomplete, to identify the
+underlying, call/put, strike, expiration, signed contract count, and
+average cost. That block carries the OCC `symbol`, `underlying`,
+`strike_price`, `expiration_date`, `option_type`, and `multiplier`; the
+row's `units` is the signed contract count, and its `cost_basis` is the
+average cost per share, not per contract.
 
 For a session/day read, fetch each distinct standard contract with
 `get_option_chain(symbol, strike=X, from_date=expiration,
@@ -1130,10 +1136,13 @@ open P&L:
    caveat it as delayed by the same ~15 minutes rather than treating
    it as the live tape.
 3. **Are the brokerage P&L and position-mark fields trustworthy for
-   this session?** `get_snaptrade_positions`'s `price` and `open_pnl`
-   are SnapTrade's periodic sync snapshot of the brokerage's own
-   marks, not a live feed; cite the account's `sync_status` alongside
-   any figure drawn from them. Two distinct failure modes sit on top
+   this session?** `get_snaptrade_positions`'s `price` is SnapTrade's
+   periodic sync snapshot of the brokerage's own mark, not a live
+   feed. Its rows carry no P&L field, so a position's unrealized P&L
+   is `(price - cost_basis) × units`, times `instrument.multiplier` for
+   an option row. `price` and `cost_basis` are per share, and the
+   result inherits that staleness; cite the account's `sync_status`
+   alongside any figure drawn from them. Two distinct failure modes sit on top
    of that: (a) *same-day RTH open*: day P&L equals market value
    because there's no prior close to anchor against; (b) *AH /
    overnight fill*: the position carries to the next session, so day

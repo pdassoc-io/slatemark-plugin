@@ -13,8 +13,9 @@ retry or use component calls to bypass the denial or throttle.
 
 Run a Position Review on $ARGUMENTS using the connected Slatemark tools.
 Start with `get_position_context(symbol)` for journal intent and holding
-evidence, including manual entries when no broker is available. Read a
-specific `get_journal_entry` if its thesis preview is truncated. Empty
+evidence, including manual entries when no broker is available. Read the
+entries behind truncated thesis previews with one `get_journal_entries`
+call (a one-item list when only one preview is truncated). Empty
 journal entries do not mean no holding; preserve `broker_position.status`
 and `journal_coverage`, including unknown or unauthorized states.
 

@@ -13,9 +13,8 @@ your AI client creates the response.
 Use the first Free research workflow at
 <https://slatemark.ai/first-workflow>:
 
-> Show AAPL's latest available quote and latest non-null daily RSI(14) and
-> ATR(14). Keep quote and indicator timestamps separate, and include each
-> tool's source plus available `as_of`, `fetched_at`, and `data_quality` fields.
+> What is AAPL's latest available price, and how much has it been moving
+> each day?
 
 It needs no journal entry, brokerage link, paid plan, or provider key. It does
 require an authenticated, available Free connection, sufficient daily history,
