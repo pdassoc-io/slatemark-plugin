@@ -103,8 +103,9 @@ additional research and optional journal workflows.
   here is personalized investment advice.
 - Market data is approximately 15 minutes delayed and labeled with its
   freshness. Brokerage connections provide Account Data, not market data.
-  Option-chain snapshots are delayed, available only where listed,
-  contain no Greeks, and use indicative, non-executable marks.
+  Option-chain snapshots are delayed, available only where listed, and use
+  indicative, non-executable marks. Their Greeks are model estimates
+  computed from the snapshot's implied volatility, not exchange values.
 - The bundled `skills/analytical-framework/SKILL.md` is generated for each
   release from Slatemark's maintained source, so its changes arrive with
   plugin updates.

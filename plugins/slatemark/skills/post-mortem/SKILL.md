@@ -24,8 +24,8 @@ An order may appear first, but booked activity remains canonical for
 financial outcomes. Until it arrives, capture the user's rationale; do not
 hand-close the entry or invent P&L or a manual financial child. If order
 and booked activity describe the same execution, never count both.
-Sync now cannot force upstream publication; no new activity does not
-disprove the execution. Do not infer any state the tools did not return.
+No Slatemark check can force upstream publication; no new activity does
+not disprove the execution. Do not infer any state the tools did not return.
 
 - Compare recorded intent and what happened, keeping observations separate
   from causal interpretation. Missing records cannot prove bad discipline.
