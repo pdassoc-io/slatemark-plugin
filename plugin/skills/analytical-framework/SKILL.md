@@ -9,9 +9,9 @@ description: |
   Strategy Scorecard or P&L questions. Match depth to the request:
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
-version: "37"
+version: "38"
 metadata:
-  content_hash: 0545e07f0017981c3e6409eba5d643aa5bb99fe50b1e2ce428575adb04997b0c
+  content_hash: 7b5ddb278557a02d86d71e8ff3687ea74baff9ab3643f177c89bdc3ca7b32ca4
 ---
 
 # Analytical Framework
@@ -356,7 +356,7 @@ mirror, never by recomputing from raw fills or a journal scan:
   `get_weekly_slate`.
 - *"how were my trades graded?"*, sizing-versus-median or
   re-entry-hygiene questions on specific closes ->
-  `get_trade_grades`.
+  `get_closed_trade_facts`.
 - *"what's on my calendar this week?"*, an earnings date as a
   calendar fact rather than a market-data fetch ->
   `get_upcoming_events`.
@@ -894,7 +894,7 @@ lot-aging facts more room.
 verbs aimed at the user's trading, no urgency framing ("before the
 open!"), no unprompted sizing or entry math. Facts with their age,
 then questions. Follow-ups on the graded week or on tax dates
-resolve through the mirror tools (`get_trade_grades`,
+resolve through the mirror tools (`get_closed_trade_facts`,
 `get_lot_aging`, `get_wash_sale_windows`) per *Read the Slate,
 calendar, and tax dates through their mirror tools*, and the
 read-only constraint in *Hard constraints* applies to every line.
