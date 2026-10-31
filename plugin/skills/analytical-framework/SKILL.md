@@ -9,9 +9,9 @@ description: |
   Strategy Scorecard or P&L questions. Match depth to the request:
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
-version: "38"
+version: "39"
 metadata:
-  content_hash: 7b5ddb278557a02d86d71e8ff3687ea74baff9ab3643f177c89bdc3ca7b32ca4
+  content_hash: e3550c73b7292ec721c11c1e0f9ef26b681d65509c2f0c506c285aaa6214ab27
 ---
 
 # Analytical Framework
@@ -103,7 +103,8 @@ about whether a position exists. Report it as it reads:
   unjournaled, not that it does not exist. `total_units_partial` or
   `holdings_complete: false` mean the size is a floor, so give it as
   "at least", not as the position. `total_units: null` with
-  `total_units_basis: no_equity_leg` means options only, not zero.
+  `total_units_basis: no_equity_leg` means options or `other_instruments`
+  only, not zero.
 - `not_held`: the brokerage was read in full and does not report it.
 - `unknown`: the read failed or covered only part of the book. Say you
   could not confirm the position and name the brokerage read as the
