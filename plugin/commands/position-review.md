@@ -17,7 +17,12 @@ evidence, including manual entries when no broker is available. Read the
 entries behind truncated thesis previews with one `get_journal_entries`
 call (a one-item list when only one preview is truncated). Empty
 journal entries do not mean no holding; preserve `broker_position.status`
-and `journal_coverage`, including unknown or unauthorized states.
+and `journal_coverage`, including unknown or unauthorized states. When
+no brokerage is visible, lead with that gap and say the journal has no
+entry, never that there is no holding; an opening summary must not
+list a holding or position among the things the record lacks. Give a
+partial size as "at least" wherever the number appears, including an
+opening summary.
 
 Compare the original thesis and the user's current `active_plan` with
 current price, relevant levels, catalysts, and applicable framework rules
@@ -29,3 +34,6 @@ framing, use the exact key with `get_account_profile` and check
 State supported changes, counterevidence, and unresolved questions. Ask
 for original framing only if it is missing from the record. Do not direct
 an add or trim, rewrite the user's plan, or journal an unsolicited review.
+Under "just tell me what to do", do not choose trim, add, hold, wait, or
+neither; attribute to the plan only what it records, and say the
+decision is the user's.

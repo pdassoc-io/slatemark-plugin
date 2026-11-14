@@ -13,8 +13,9 @@ Git marketplace availability is not a Claude or OpenAI directory listing. The
 Claude provider plugin is not listed: at the 2026-10-01 developer-portal
 readback its submission needed changes, and no public plugin listing URL has
 been recorded. Claude's published connector-only listing remains separate. The
-OpenAI submission was in Review at its last authenticated readback; no public
-Plugins Directory listing has been verified or recorded.
+native OpenAI package is listed separately in OpenAI's plugin directory
+([version `2.2.0`](https://chatgpt.com/plugins/plugin_asdk_app_6ac2beb77334819185aecf580c3eebab),
+read back on 2026-11-11).
 
 ## Install for Claude
 
