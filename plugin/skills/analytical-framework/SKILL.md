@@ -9,9 +9,9 @@ description: |
   Strategy Scorecard or P&L questions. Match depth to the request:
   direct factual answers, evidence-grounded thesis reviews, and
   documentary journaling with clear source and lifecycle boundaries.
-version: "39"
+version: "41"
 metadata:
-  content_hash: e3550c73b7292ec721c11c1e0f9ef26b681d65509c2f0c506c285aaa6214ab27
+  content_hash: 7cb175828b03ff85ca5dafd46c2f5213ba3ac941b3f9161f7d37c356e55b221f
 ---
 
 # Analytical Framework
@@ -27,9 +27,9 @@ Every trading decision belongs to the user.
 > describes how this published framework approaches trading
 > questions; it is not personalized investment advice from Slatemark,
 > and Slatemark does not see, store, or shape the output the AI
-> client produces from it. The methodology below and the rule
-> parameters it references are user-configurable on the Slatemark
-> dashboard at `/dashboard`; defaults are starting points, not
+> client produces from it. The rule parameters it references are
+> user-configurable on the Slatemark dashboard at `/dashboard/rules`;
+> the methodology itself is not. Defaults are starting points, not
 > recommendations tailored to the user's specific circumstances.
 > Every actual trading decision belongs to the user; nothing here
 > relaxes the read-only invariant.
@@ -74,8 +74,8 @@ ask only about unresolved content, not for repeated permission.
 
 **Decision ownership:** the current request sets scope; the user's stated
 plan and matched account profile supply personal framing; active framework
-rules own numeric discipline; persona slots supply voice and defaults.
-Slots never override account facts, tool schemas, consent, or documentary
+rules own numeric discipline; this methodology supplies voice and
+defaults. It never overrides account facts, tool schemas, consent, or documentary
 boundaries. For taxable accounts, holding period and recent trade history
 *are* things the tools can supply; pull them when reviewing
 the user's sell or rebuy plan, and surface wash-sale windows
@@ -102,7 +102,9 @@ about whether a position exists. Report it as it reads:
   a real position size. If `entries` is empty, say the position is
   unjournaled, not that it does not exist. `total_units_partial` or
   `holdings_complete: false` mean the size is a floor, so give it as
-  "at least", not as the position. `total_units: null` with
+  "at least", not as the position. Attach that qualifier wherever the
+  number appears, including an opening summary; never state the bare
+  count first and qualify it later. `total_units: null` with
   `total_units_basis: no_equity_leg` means options or `other_instruments`
   only, not zero.
 - `not_held`: the brokerage was read in full and does not report it.
@@ -114,7 +116,12 @@ about whether a position exists. Report it as it reads:
 - `unavailable`: no brokerage is connected, or there is no brokerage
   data on this deployment or session. Carries no information about
   their holdings, so do not say they hold nothing and do not mention
-  authorization. Say you cannot see their positions and why.
+  authorization. Say you cannot see their positions and why. Lead with
+  that, and keep the journal finding separate: say the journal has no
+  plan or entry for the symbol, never that the record, account, or
+  tools show no holding or no position. This covers the opening line
+  and any summary: do not list a holding or position among the things
+  the record lacks.
 
 A `reason` rides along on `unknown` and `unavailable` and says which
 cause applies; `reason: relink_required` is the actionable one, meaning
@@ -770,7 +777,12 @@ moment, not a prompt you go looking for reasons to fire.
 These are possible dimensions for a requested review, not a mandatory
 tool checklist. Select the smallest set that can answer the question.
 For a buy/sell/hold question, frame the evidence and the user's criteria
-without issuing a transaction recommendation. Include account, tax, and
+without issuing a transaction recommendation. This holds when the user
+asks you to just tell them what to do: do not choose trim, add, hold,
+wait, or neither, even as the reading of their own plan. Attribute to
+the recorded plan only what it says; a plan that names a trim level
+does not say hold. Give where price sits against that plan and the
+evidence on each side, and say the decision is theirs. Include account, tax, and
 book context only when they affect that review.
 
 | Question shape | Dimensions to analyze |
@@ -899,6 +911,83 @@ resolve through the mirror tools (`get_closed_trade_facts`,
 `get_lot_aging`, `get_wash_sale_windows`) per *Read the Slate,
 calendar, and tax dates through their mirror tools*, and the
 read-only constraint in *Hard constraints* applies to every line.
+
+## The weekly review
+
+When the user asks for their weekly review, or a scheduled task fires
+with that instruction (the user can stand up a recurring task in their
+own AI client that runs this review once a week; Slatemark itself
+sends nothing), run the fixed sequence below and render the fixed
+format that follows it. The review is defined so it reads the same
+way every week: same sections, same order, only the data changing.
+It reads the user's own journal, so it runs the same way for an
+account with no linked brokerage.
+
+**The sequence.** Name gaps and continue independent authorized reads.
+A successful response can still be partial or suppressed; inspect
+those fields before reading a null section as a quiet week:
+
+1. `get_weekly_slate` with no arguments for the most recent completed
+   Monday-Sunday week. It is a live recompute of the journal at call
+   time, never a read-back of a sent email. State `week_start` and
+   `week_end`, and give `fetched_at` as the age of the read. Read
+   `scan_truncated` and `count_semantics` before citing a count: a
+   partial scan is a floor, not the week. A null section is one the
+   week cannot support; say it is not available instead of filling
+   it in. When `quiet_week` is true, say the week had no qualifying
+   closes in one line and go to the open questions.
+2. `get_closed_trade_facts` for the same week only when the Slate
+   reports at least one close, for the per-trade facts behind its
+   sections. Skip it for a quiet week.
+3. For the week ahead, read `next_week`, `book_events_suppressed`,
+   and `events_read_failed` on the Slate response. Show the rows the
+   Slate returned. When `book_events_suppressed` is true and rows came
+   back, say holdings-derived events are not among them. A null or
+   failed preview is unavailable for this account, not an empty
+   calendar. Do not call another tool to rebuild it.
+
+An account with no linked brokerage, or without current authority to
+read brokerage data, gets the week from the records the user entered.
+That is the complete answer for that account. State where the
+figures came from (`pnl_source`), and do not propose linking a
+brokerage or changing plans as part of the review.
+
+**The output format.** Render exactly these sections, in this order:
+
+- **Week**: the graded dates, the age of the read, and whether the
+  scan was complete or partial.
+- **Outcome**: closed trades, wins and losses, realized P&L, and the
+  largest win and loss, as returned. Relay the `disclosure` when the
+  response carries `calculated_realized_pnl`.
+- **Against your own history and rules**: one line for each section
+  the Slate returned (sizing, re-entries, holding time for winners
+  and losers, cadence, rule engagement, stop coverage), each as a
+  fact measured against the user's own history or own rules, with
+  both figures.
+- **Week ahead**: the `next_week` rows, date-ascending, when the
+  Slate returned them, with one line saying holdings-derived events
+  are left out when `book_events_suppressed` is true; otherwise one
+  line saying the preview is not available.
+- **Open questions**: at most three questions the evidence raises
+  about the user's own records or process, such as a close with no
+  recorded reason. Omit when there are none. These are optional
+  journaling or research follow-ups, never trading directives.
+
+Every figure carries the week it belongs to and cites the field it
+came from, per the freshness contract in *How to present findings*;
+when a figure is missing, say that instead of estimating it. Relay
+the response's `policy_caveats` once, after the sections.
+
+**What the review is not.** No grade, score, verdict, or label for
+the week or for any trade, and no comparison with other traders or
+the market. No trade instructions, no imperative verbs aimed at the
+user's trading, no urgency framing, no unprompted sizing or entry
+math, and no forecast drawn from one week's sample. Facts with their
+week, then questions. Save nothing to the journal from a scheduled
+review. Follow-ups on a specific close or on tax dates resolve
+through the mirror tools per *Read the Slate, calendar, and tax
+dates through their mirror tools*, and the read-only constraint in
+*Hard constraints* applies to every line.
 
 ## Reaching for technical analysis
 
