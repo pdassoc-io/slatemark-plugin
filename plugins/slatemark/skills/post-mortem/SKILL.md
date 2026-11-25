@@ -1,7 +1,9 @@
 ---
 name: post-mortem
-description: Review a completed trade against recorded intent and preserve the user's own
-  explanation.
+description: 'Reviews a trade the user has exited, fully or in part: what they planned, what
+  happened, and what the record shows, keeping their own explanation in their words. Use when
+  the user wants to look back on a trade or log how it ended in their journal. Doesn''t turn
+  one outcome into a lesson or direct the next trade.'
 ---
 
 <!-- Generated from marketplace/plugin/commands by scripts/build_plugin_skill.py; do not edit. -->

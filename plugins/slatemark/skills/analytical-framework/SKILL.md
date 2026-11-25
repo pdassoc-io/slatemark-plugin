@@ -1,17 +1,19 @@
 ---
 name: analytical-framework
 description: |
-  Use this skill for market research or trading questions when the
-  Slatemark tools are connected. Triggers include: market-data analysis,
-  position review, trade-idea evaluation, portfolio questions, options
-  analysis, macro setup checks, trade journaling (logging position
-  intent, user-reported activity, or an outcome), tagging trades, and
-  Strategy Scorecard or P&L questions. Match depth to the request:
-  direct factual answers, evidence-grounded thesis reviews, and
-  documentary journaling with clear source and lifecycle boundaries.
+  Slatemark's research method for market and trading questions when
+  the Slatemark tools are connected. Use it for price and market-data
+  lookups, reviewing a position or a trade idea, portfolio and options
+  questions, the economic and market backdrop, and the user's trade
+  journal: logging why they entered a trade, what they did, and how it
+  ended, tagging trades, and Strategy Scorecard or P&L questions.
+  Answer simple lookups directly and save deeper reviews for when
+  they're asked for. Ground every claim in data the tools returned,
+  keep journal entries to what the user reported, and leave every
+  trading decision to the user.
 metadata:
-  version: "41"
-  content_hash: 7cb175828b03ff85ca5dafd46c2f5213ba3ac941b3f9161f7d37c356e55b221f
+  version: "42"
+  content_hash: d814ded3f8b38027e45b3912e45dc8ca8f6ac7158d5d8d4b7a81e43845cfc611
 ---
 
 # Analytical Framework

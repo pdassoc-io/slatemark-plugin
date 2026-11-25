@@ -1,7 +1,10 @@
 ---
 name: regime-check
-description: Review the cross-asset backdrop using Slatemark's composite read, the cross-asset
-  panel, and relevant follow-ups.
+description: 'Summarizes the overall market backdrop: rates, the dollar, credit, volatility,
+  cross-asset correlations, and the rate path priced in fed funds futures, from Slatemark''s
+  market regime read and a cross-asset panel. Use when the user asks what the market environment
+  looks like or whether conditions are risk-on or risk-off. Describes conditions without calling
+  them a signal to act.'
 ---
 
 <!-- Generated from marketplace/plugin/commands by scripts/build_plugin_skill.py; do not edit. -->

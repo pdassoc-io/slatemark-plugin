@@ -1,5 +1,5 @@
 ---
-description: Review an earnings event using sourced dates, current option premiums, and supported historical reactions.
+description: "Looks at a company's next earnings report: the date and whether it's confirmed, current option prices (the at-the-money straddle) for the expiration that covers it, and how the stock moved after past reports where history supports it. Use when the user asks about an upcoming earnings report or its expected move. Doesn't predict the result or suggest a trade."
 argument-hint: "[ticker]"
 ---
 
