@@ -9,7 +9,7 @@
     {
       "name": "slatemark",
       "source": "./plugin",
-      "description": "Check your risk before you take the trade. Connect a supported Claude client to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and the installed analyst skill are optional context. Slatemark supplies factual tool results; Claude creates the response. Available tools depend on plan and configuration. A Slatemark account is required; Free includes one active AI-client connection.",
+      "description": "Check your risk before you take the trade. Slatemark connects Claude to delayed market data, technical indicators, SEC filings, and economic data, and adds guided reviews for a trade you're weighing, a position you hold, an upcoming earnings report, the events ahead, the market backdrop, and a closed trade. An optional private trade journal lets Claude check your trades against your own plan and rules. Brokerage access is read-only and Slatemark never places trades; journal tools change only your own Slatemark records. Slatemark supplies the data and Claude writes the analysis, which is not investment advice. A Slatemark account is required; Free includes one active AI-client connection, and available tools depend on your plan.",
       "homepage": "https://slatemark.ai",
       "keywords": [
         "trading",

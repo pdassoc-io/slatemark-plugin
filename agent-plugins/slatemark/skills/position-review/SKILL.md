@@ -1,7 +1,10 @@
 ---
 name: position-review
-description: Review current evidence against a held position's recorded thesis and framework
-  rules.
+description: Checks a position the user holds against why they entered it, their current plan,
+  and their own trading rules in Slatemark, using the latest available price, key levels,
+  and upcoming events. Use when the user asks how a holding is doing or whether their original
+  reason for it still holds. Lays out what changed and leaves the hold, add, or trim decision
+  to the user.
 ---
 
 <!-- Generated from marketplace/plugin/commands by scripts/build_plugin_skill.py; do not edit. -->

@@ -1,7 +1,9 @@
 ---
 name: catalyst-map
-description: Map sourced events in a requested window, preserving estimated dates and coverage
-  gaps.
+description: 'Lists upcoming dated events for a ticker or the market over a chosen window:
+  earnings, company events, economic releases, and Fed meetings, each with its source and
+  whether the date is confirmed or estimated. Use when the user asks what''s coming up or
+  what events fall before a date. Flags gaps rather than claiming the list is complete.'
 ---
 
 <!-- Generated from marketplace/plugin/commands by scripts/build_plugin_skill.py; do not edit. -->
