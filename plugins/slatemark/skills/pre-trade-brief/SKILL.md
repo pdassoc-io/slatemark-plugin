@@ -1,7 +1,10 @@
 ---
 name: pre-trade-brief
-description: Review a proposed trade against relevant evidence, the user's framework, and
-  recorded intent.
+description: 'Reviews a trade the user is considering before they place it: trend and key
+  price levels, the next catalyst, options context, the market backdrop, and the user''s own
+  rules and plan, laid out as what supports it, what argues against it, and what would prove
+  it wrong. Use when the user asks whether a trade idea holds up. Doesn''t tell them to buy
+  or sell.'
 ---
 
 <!-- Generated from marketplace/plugin/commands by scripts/build_plugin_skill.py; do not edit. -->

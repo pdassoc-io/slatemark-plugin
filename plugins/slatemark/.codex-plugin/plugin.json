@@ -1,6 +1,6 @@
 {
   "name": "slatemark",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Check your risk before you take the trade. Connect a supported AI client to delayed market data, technical calculations, SEC filings, and macroeconomic research. Your private journal and installed skills are optional context. Slatemark supplies factual tool results; your AI client creates the response. Available tools depend on plan and configuration. A Slatemark account is required.",
   "author": {
     "name": "Slatemark",
@@ -40,8 +40,7 @@
     "brandColor": "#246452",
     "brandColorDark": "#93d8c4",
     "composerIcon": "./assets/slatemark-mark.svg",
-    "logo": "./assets/slatemark-mark.svg",
-    "screenshots": []
+    "logo": "./assets/slatemark-mark.svg"
   },
   "extensions": {
     "com.openai": {
